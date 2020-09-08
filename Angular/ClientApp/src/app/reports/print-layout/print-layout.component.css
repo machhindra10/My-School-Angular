@@ -1,0 +1,39 @@
+.header, .header-space {  height: 64px; }
+.footer, .footer-space { height: 25px; padding-top:5px; }
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width:100%;
+}
+
+@media screen {
+  :host {
+    display: none;
+  }
+}
+
+.content{
+  width:100%;
+}
+.landscape {
+  /*width: 950px;*/
+  width: 100%;
+}
+.portrait {
+  /*width: 660px;*/
+  width: 100%;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.full {  
+  color: lightgray;
+  width:100%;
+  font-size:12px;
+}
+

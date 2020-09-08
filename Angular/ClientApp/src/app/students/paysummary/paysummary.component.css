@@ -1,0 +1,24 @@
+
+/* Small table */
+/deep/ tr.mat-footer-row, tr.mat-row {
+  height: 35px !important;
+}
+.mat-button {
+  padding: 0;
+  min-width: 0;
+  width: 40px;
+  height: 34px;
+  flex-shrink: 0;
+  line-height: 33px;
+  border-radius: 50%;
+}
+/deep/ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type {
+  padding-right: 15px !important;
+}
+tr.mat-footer-row {
+  font-weight: bold;
+}
+.col-right-100{
+  width:100px;
+  text-align:right;
+}

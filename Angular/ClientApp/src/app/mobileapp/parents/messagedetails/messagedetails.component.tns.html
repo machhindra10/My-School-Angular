@@ -1,0 +1,21 @@
+<ActionBar title="Message Content">
+  <NavigationButton text="Go Back" hint="Back" android.systemIcon="ic_menu_back" (tap)="onNavBtnTap()">
+  </NavigationButton>
+
+</ActionBar>
+<FlexboxLayout class="page">
+  <StackLayout class="form">
+    <GridLayout rows="auto, auto, auto">
+      <CardView row="0" *ngIf="message != null" class="card-style" elevation="5" radius="5">
+        <ScrollView>
+          <StackLayout orientation="vertical" class="list-group-item">
+            <Label class="name" [text]="message.message.message" textWrap="true"></Label>
+            <Label class="details" [text]="message.message.datecreated | date : 'dd/MM/yyyy hh:mm:ss aa'"></Label>
+          </StackLayout>
+        </ScrollView>
+      </CardView>
+      <ActivityIndicator row="1" [busy]="processing" class="indicator"></ActivityIndicator>
+    </GridLayout>
+  </StackLayout>
+
+</FlexboxLayout>

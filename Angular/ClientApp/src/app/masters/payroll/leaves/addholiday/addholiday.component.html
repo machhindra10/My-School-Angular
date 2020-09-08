@@ -1,0 +1,22 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    Add Holiday
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" floatLabel="always" class="spacing">
+      <mat-label>Holiday</mat-label>
+      <input type="text" matInput name="holiday" [(ngModel)]="holiday" maxlength="50" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="spacing">
+        <mat-label>Date</mat-label>
+        <input matInput readonly [matDatepicker]="picker" name="dates" [(ngModel)]="dates" datetime="dd/MM/yyyy"
+               [min]="minDate" [max]="maxDate" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

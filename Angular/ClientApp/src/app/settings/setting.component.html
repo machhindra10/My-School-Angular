@@ -1,0 +1,111 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade"
+       *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+    <mat-card>
+      <div class="mat-card-header">
+        <mat-card-title>Settings</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Save"><mat-icon>save</mat-icon></button>
+      </div>
+
+      <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>App Name</mat-label>
+              <input type="text" matInput name="appname" [(ngModel)]="settings.appname" maxlength="50" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="66%" fxLayoutGap="5px" fxLayoutAlign="end" class="inner">
+            <div class="example-loading-shade"
+                 *ngIf="isLoading">
+              <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+            </div>
+            <input style="display: none"
+                   type="file" (change)="onFileChanged($event)" accept="image/x-png, image/gif, image/jpeg"
+                   #fileInput>
+            <button type="button" mat-button color="primary" matTooltip="Edit" (click)="fileInput.click()"><mat-icon class="sm-icon">edit</mat-icon></button>
+            <mat-card class="example-card mat-card2">
+              <img [src]="settings.logo" width="249" height="64" />
+            </mat-card>
+
+          </div>
+
+        </div>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="66%">
+            <mat-form-field appearance="outline">
+              <mat-label>Address</mat-label>
+              <input type="text" matInput name="address" [(ngModel)]="settings.address" maxlength="500" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            
+          </div>
+
+        </div>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input type="text" matInput name="city" [(ngModel)]="settings.city" maxlength="50" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="32%">
+
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <input type="text" matInput name="state" [(ngModel)]="settings.state" maxlength="50" required>
+            </mat-form-field>
+
+          </div>
+          <div fxFlex="33%">
+
+          </div>
+        </div>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <mat-select name="country" [(ngModel)]="settings.country" required>
+                <mat-option *ngFor="let c of countries" [value]="c.name">
+                  {{c.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="32%">
+            <mat-form-field appearance="outline">
+              <mat-label>Currency</mat-label>
+              <mat-select name="currency" [(ngModel)]="settings.currency" required>
+                <mat-option *ngFor="let c of currencies" [value]="c.iso">
+                  {{c.iso }} - {{c.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+          </div>
+        </div>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="66%">
+            <mat-form-field appearance="outline">
+              <mat-label>Time zone</mat-label>
+              <mat-select name="year" [(ngModel)]="settings.timezoneid" required>
+                <mat-option *ngFor="let y of timezones" [value]="y.Id">
+                  {{y.DisplayName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>         
+          <div fxFlex="33%">
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>

@@ -1,0 +1,39 @@
+<div class="div-login">
+  <div class="inner1">
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)" [style.fontSize.px]="14">
+      <mat-card class="example-card mat-elevation-z1">
+        <div class="example-loading-shade" *ngIf="isLoading">
+          <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header" style="text-align:center">
+          <mat-card-title>Welcome</mat-card-title><br />
+          <span class="mid-div">Enter your password to continue</span>
+        </div>
+        <div style="margin-top:60px;" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="20px" fxLayoutAlign="start">
+          <div fxFlex="100%">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input type="text" (click)="reset()" readonly matInput [(ngModel)]="credentials.username" name="username" maxlength="50" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100%">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter your password</mat-label>
+              <input type="password" matInput [(ngModel)]="credentials.password" name="password" maxlength="15" required>
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="invalidLogin" class="alert alert-danger">Wrong password. Try again or click Forgot password to reset it.</div>
+        <div *ngIf="invalidemail" class="alert alert-danger">Couldn't find your account.</div>
+        <div *ngIf="requestsent" class="alert alert-danger">Password recovery request has been sent to your email. Please verify!</div>
+
+        <br /><br />
+        <mat-card-actions align="end">
+          <button type="button" [disabled]="requestsent" mat-button (click)="forgotpassword()">Forgot password</button>
+          <button mat-raised-button color="primary">Sign in</button>
+        </mat-card-actions>
+
+      </mat-card>
+    </form>
+  </div>
+</div>

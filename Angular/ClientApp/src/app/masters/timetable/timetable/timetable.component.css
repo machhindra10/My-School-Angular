@@ -1,0 +1,104 @@
+
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+
+
+/* css for spinner */
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  z-index: 105;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* css for spinner end */
+
+
+
+/deep/.no-arrow div.mat-select-arrow {
+  visibility: hidden !important;
+}
+
+table .mat-select {
+  padding-left: 10px;
+  
+}
+
+.example-container {
+  height: 363px;
+  width: inherit;
+  overflow: auto;
+}
+
+
+
+td.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+/*.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}*/
+
+th, td {
+  text-align: center !important;
+  width: 15px;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 5px;
+  height:7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .10);
+}
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+.schedule /deep/ .mat-form-field {
+  margin: 5px;
+  margin-left: 0px;
+}
+
+.schedule /deep/ .mat-form-field-appearance-outline .mat-form-field-infix {
+  /*padding: 1em 0 1em 0;*/
+  padding: 7px;
+}
+
+.schedule /deep/ .mat-form-field {
+  width: 150px !important;
+}
+
+.schedule .time /deep/ .mat-form-field {
+  width: 130px !important;
+}
+.period{
+  width:130px;
+}
+.add-icon-timetable {
+  width: 25px !important;
+  height: 25px !important;
+  font-size: 25px !important;
+}

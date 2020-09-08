@@ -1,0 +1,38 @@
+.page {
+  align-items:flex-start;
+  flex-direction: column;
+}
+
+.form {
+  margin-left: 0;
+  margin-right: 0;
+  flex-grow: 2;
+  vertical-align: top;
+}
+.btn-primary {
+  margin: 30 5 15 5;
+}
+.list-group-item{  
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top:20px;
+  padding-bottom: 20px;
+}
+.name{
+  font-size: 16px;
+padding-bottom: 5px;
+}
+.name-bold{  
+font-weight: 600;
+}
+.details{
+  font-size: 11px;
+}
+
+.title{
+  color: white;
+  background: cornflowerblue;
+}
+.indicator{
+  margin-top: 10px;
+}

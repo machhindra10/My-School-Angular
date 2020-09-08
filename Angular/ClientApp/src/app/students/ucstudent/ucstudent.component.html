@@ -1,0 +1,69 @@
+<div [@simpleFadeAnimation]="'in'" class="inner" *ngIf="studentid > 0">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+
+    <div fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+         fxLayoutWrap fxLayoutAlign="start">
+      <div fxFlex="12%">
+        <mat-card class="example-card mat-card2">
+          <div fxFlex="100%" class="inner">
+            <div class="example-loading-shade"
+                 *ngIf="isLoading1">
+              <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+            </div>
+            <img [src]="student.photo" width="70" height="70" />
+          </div>
+        </mat-card>
+      </div>
+
+      <div fxFlex="31%" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+        <div fxFlex="32%">
+          <mat-label class="h-title">PRN Number : </mat-label><mat-label>{{   student.prnno}}</mat-label>
+        </div>
+        <div fxFlex="32%">
+          <mat-label class="h-title">Student Name : </mat-label><mat-label>{{student.fname + " " + student.mname + " " + student.lname}}</mat-label>
+        </div>
+        <div fxFlex="32%">
+          <mat-label class="h-title">Aadhar Number : </mat-label><mat-label>{{student.aadharno}}</mat-label>
+        </div>
+
+      </div>
+      <div fxFlex="21%" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+        <div fxFlex="67%">
+          <mat-label class="h-title">Address : </mat-label><mat-label>{{student.address}}</mat-label>
+        </div>
+        <div fxFlex="33%">
+          <mat-label class="h-title">Email : </mat-label><mat-label>{{student.email}}</mat-label>
+        </div>
+      </div>
+      <div fxFlex="18%" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+        <div fxFlex="32%">
+          <mat-label class="h-title">Mobile : </mat-label><mat-label>{{ student.mobile}}</mat-label>
+        </div>
+        <div fxFlex="32%">
+          <mat-label class="h-title">Phone : </mat-label><mat-label>{{student.phone}}</mat-label>
+        </div>
+        <div fxFlex="32%">
+          <mat-label class="h-title">Birth Date : </mat-label><mat-label>{{student.dob | date:'dd/MM/yyyy'}}</mat-label>
+        </div>
+      </div>
+      <div fxFlex="18%" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+        <div fxFlex="32%">
+          <mat-label class="h-title">Roll No. : </mat-label><mat-label>{{(student.tStudentAdmission != null && student.tStudentAdmission.length > 0) ? student.tStudentAdmission[0].rollno : 'NA'}}</mat-label>
+        </div>
+        <div fxFlex="32%">
+          <mat-label class="h-title">Class : </mat-label><mat-label>{{(student.tStudentAdmission != null && student.tStudentAdmission.length > 0) ? student.tStudentAdmission[0].class.standard : 'NA'}}</mat-label>
+        </div>
+        <div fxFlex="32%">
+          <!--<a routerLink="/register/1">Modify</a>-->
+          <!--<mat-label class="h-title">Birth Date : </mat-label><mat-label>{{student.dob | date:'dd/MM/yyyy'}}</mat-label>-->
+        </div>
+      </div>
+
+
+    </div>
+
+  </form>
+</div>

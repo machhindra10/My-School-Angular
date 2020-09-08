@@ -1,0 +1,26 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    <mat-card-title>SMS Settings</mat-card-title>
+  </div>
+  <div mat-dialog-content class="smssettings">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>SMS Key</mat-label>
+      <input type="text" matInput name="smskey" [(ngModel)]="settings.smskey" maxlength="500" required cdkFocusInitial>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Profile Id</mat-label>
+      <input type="text" matInput name="profileid" [(ngModel)]="settings.smsprofileid" maxlength="50" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Sender Id</mat-label>
+      <input type="text" matInput name="senderid" [(ngModel)]="settings.smssenderid" maxlength="10" required>
+    </mat-form-field>
+    <span>Please click <a href="http://www.nimbusit.co.in/autosignup.asp" target="">here</a> to register and purchase
+      bulk SMS's at Nimbusit services and enter the
+      key's above</span>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Save</button>
+  </div>
+</form>

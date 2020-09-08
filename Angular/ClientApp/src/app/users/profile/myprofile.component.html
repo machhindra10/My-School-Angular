@@ -1,0 +1,120 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <mat-card>
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+
+      <div class="mat-card-header">
+        <mat-card-title>{{user.fname}}'s Profile  <span style="font-size:14px;">({{user.email}})</span></mat-card-title>
+        <span class="spacer"></span>
+        <span style="font-size:12px;color: darkgray;">Last login: {{user.lastlogin | date : 'dd/MM/yyyy hh:mm:ss'}}</span>
+        <button mat-button color="primary" matTooltip="Save"><mat-icon>save</mat-icon></button>
+      </div>
+      <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input type="text" matInput name="fname" [(ngModel)]="user.fname" maxlength="20" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Middle Name</mat-label>
+              <input type="text" matInput name="mname" [(ngModel)]="user.mname" maxlength="20" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input type="text" matInput name="lname" [(ngModel)]="user.lname" maxlength="20" required>
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Aadhar Number</mat-label>
+              <input type="text" matInput name="aadharno" [(ngModel)]="user.aadharno" maxlength="12" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <!--<mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input type="text" readonly disabled email matInput name="email" [(ngModel)]="user.email" maxlength="50" required>
+            </mat-form-field>-->
+          </div>
+          <div fxFlex="33%" fxLayoutAlign="end">
+            <div class="example-loading-shade"
+                 *ngIf="isLoading">
+              <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+            </div>
+            <input style="display: none"
+                   type="file" (change)="onFileChanged($event)" accept="image/x-png, image/gif, image/jpeg"
+                   #fileInput>
+            <button type="button" mat-button color="primary" matTooltip="Edit" (click)="fileInput.click()"><mat-icon class="sm-icon">edit</mat-icon></button>
+            <button type="button" mat-button color="primary" matTooltip="Remove" (click)="removephoto()"><mat-icon class="sm-icon">delete</mat-icon></button>
+            <mat-card class="example-card mat-card2">
+              <img [src]="user.photo" width="50" height="50" />
+            </mat-card>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+
+          <div fxFlex="33%">
+            <!--<mat-form-field appearance="outline" style="display:none;">
+              <mat-label>User Name</mat-label>
+              <input type="text" matInput name="userName" [(ngModel)]="user.userName" maxlength="15" required>
+            </mat-form-field>-->
+          </div>
+          <div fxFlex="33%">
+          </div>
+          <div fxFlex="33%">
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+
+
+  <mat-card class="div-second">
+    <form class="form-signin" #loginForm1="ngForm" (ngSubmit)="ChangePassword(loginForm1)" [style.fontSize.px]="14">
+
+      <div class="mat-card-header">
+        <mat-card-title>Change Password</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Change password"><mat-icon>save</mat-icon></button>
+      </div>
+      <div class="div-p5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+        <div fxFlex="33%" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Old Password</mat-label>
+              <input type="password" matInput name="oldpassword" [(ngModel)]="user1.oldpassword" maxlength="15" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>New Password</mat-label>
+              <input type="password" matInput name="newpassword" [(ngModel)]="user1.newpassword" maxlength="15" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Confirm Password</mat-label>
+              <input type="password" matInput name="confirmpassword" [(ngModel)]="user1.confirmpassword" maxlength="15" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+
+</div>

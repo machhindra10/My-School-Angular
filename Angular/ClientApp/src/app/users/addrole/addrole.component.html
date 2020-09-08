@@ -1,0 +1,31 @@
+<div [@simpleFadeAnimation]="'in'">
+  <mat-card>
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+      <div class="example-loading-shade"
+           *ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+      </div>
+      <div class="mat-card-header">
+        <button mat-button color="primary" matTooltip="Back" (click)="Back()"><mat-icon>arrow_back</mat-icon></button>
+        <mat-card-title>Role</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" *ngIf="!userrole.isadmin" matTooltip="Save"><mat-icon>save</mat-icon></button>
+      </div>
+      <div class="div-p5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+        <div fxFlex="25%">
+          <mat-form-field appearance="outline">
+            <mat-label>Role Name</mat-label>
+            <input type="text" [disabled]="userrole.isadmin || userrole.isdefault" matInput name="rolename" [(ngModel)]="userrole.rolename" maxlength="25" required>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <div *ngIf="roleid > 0" class="div-second">
+    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+      <div fxFlex="50%">
+        <app-rolerights [roleid]="roleid" [isuserroleisadmin]="userrole.isadmin"></app-rolerights>
+      </div>
+    </div>
+  </div>
+</div>

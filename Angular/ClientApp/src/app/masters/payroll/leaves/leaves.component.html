@@ -1,0 +1,110 @@
+<div [@simpleFadeAnimation]="'in'">
+  <mat-card>
+    <form class="form-signin" #loginForm="ngForm" [style.fontSize.px]="14">
+      <div class="example-loading-shade" *ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+      </div>
+      <div class="mat-card-header">
+        <mat-card-title>Leaves</mat-card-title>
+        <span class="spacer"></span>
+      </div>
+      <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="15%">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Year</mat-label>
+              <mat-select placeholder="Select" name="year" [(ngModel)]="year" (selectionChange)="load()" required>
+                <mat-option *ngFor="let y of years" [value]="y.id">{{y.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>          
+          <div fxFlex="15%">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Total Holidays</mat-label>
+              <input type="number" readonly matInput name="leaves" [(ngModel)]="totalLeaves" maxlength="2">
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <div class="div-second" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+    <div fxFlex="50%">
+      <mat-card class="mat-card-for-table">
+        <div class="example-loading-shade" *ngIf="isLoading1">
+          <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header mat-card-header-for-table">
+          <mat-card-title>Leaves ({{getTotalLeaves()}})</mat-card-title>
+          <span class="spacer"></span>
+          <button mat-button *ngIf="year == currentYear && !addnew" (click)="AddNew()" color="primary" matTooltip="Add New"><mat-icon class="add-icon">add_circle</mat-icon></button>
+
+        </div>
+        <table mat-table [dataSource]="listleaves" style="width:100%;">
+          <!-- Column -->
+          <ng-container matColumnDef="leavetype">
+            <th mat-header-cell *matHeaderCellDef style="width:250px;"> Leave Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.leavetype.code}} - {{ element.leavetype.leavetype}} </td>
+          </ng-container>
+          <ng-container matColumnDef="leaves">
+            <th mat-header-cell *matHeaderCellDef style="width:250px;"> Leaves </th>
+            <td mat-cell *matCellDef="let element"> {{element.leaves }} </td>
+          </ng-container>
+          <ng-container matColumnDef="dummy">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"> </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button color="primary" (click)="Delete(element.id)"><mat-icon>delete</mat-icon></button>
+
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card>
+    </div>
+    <div fxFlex="50%">
+      <mat-card class="mat-card-for-table">
+        <div class="example-loading-shade" *ngIf="isLoading2">
+          <mat-spinner *ngIf="isLoading2" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header mat-card-header-for-table">
+          <mat-card-title>Holidays ({{getTotalHolidays()}})</mat-card-title>
+          <span class="spacer"></span>
+          <button mat-button *ngIf="year == currentYear && !addnew" (click)="AddNewHoliday()" color="primary" matTooltip="Add New"><mat-icon class="add-icon">add_circle</mat-icon></button>
+
+        </div>
+        <table mat-table [dataSource]="listholidays" style="width:100%;">
+          <!-- Column -->
+          <ng-container matColumnDef="holiday">
+            <th mat-header-cell *matHeaderCellDef style="width:250px;"> Holiday </th>
+            <td mat-cell *matCellDef="let element"> {{element.holiday}} </td>
+          </ng-container>
+          <ng-container matColumnDef="dates">
+            <th mat-header-cell *matHeaderCellDef style="width:250px;"> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.dates | date :'dd/MM/yyyy' }} </td>
+          </ng-container>
+          <ng-container matColumnDef="dummy">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"> </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button color="primary" (click)="DeleteHoliday(element.id)"><mat-icon>delete</mat-icon></button>
+
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+        </table>
+      </mat-card>
+    </div>
+  </div>
+
+</div>

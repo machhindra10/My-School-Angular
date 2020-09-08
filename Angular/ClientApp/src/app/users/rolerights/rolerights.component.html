@@ -1,0 +1,30 @@
+<div [@simpleFadeAnimation]="'in'">    
+  <mat-card *ngIf="roleid > 0" class="mat-card-for-table">
+    <div class="example-loading-shade"
+         *ngIf="isLoading1">
+      <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>Role Rights</mat-card-title>
+      <span class="spacer"></span>
+    </div>
+    <table mat-table [dataSource]="rolerights" style="width:100%;">
+      <ng-container matColumnDef="menuname">
+        <th mat-header-cell *matHeaderCellDef style="width:150px;"> Menu </th>
+        <td mat-cell *matCellDef="let element" style="font-weight:600"> {{element.menuname }} </td>
+      </ng-container>
+      <ng-container matColumnDef="rightname">
+        <th mat-header-cell *matHeaderCellDef> Right </th>
+        <td mat-cell *matCellDef="let element"> {{element.displayname }} </td>
+      </ng-container>
+      <ng-container matColumnDef="enabled">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Enabled</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle class="example-margin" [disabled]="!isusermasteradmin && isuserroleisadmin" (change)="UpdateRoleRight(element)" color="primary" [checked]="element.isEnabled"></mat-slide-toggle>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" color="primary" [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
+    </table>
+  </mat-card>
+</div>

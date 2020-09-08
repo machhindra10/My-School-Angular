@@ -1,0 +1,9 @@
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+.schedule /deep/ .mat-form-field {  
+  margin-bottom: 10px !important;
+}
+.text-hint /deep/.mat-form-field-subscript-wrapper {
+  position: relative !important; 
+}

@@ -1,0 +1,426 @@
+<div [@simpleFadeAnimation]="'in'" style="font-size:14px">
+  <div class="inner">
+    <div class="example-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <mat-card>
+      <div class="mat-card-header">
+        <mat-card-title>Staff Attendance</mat-card-title>
+        <span class="spacer"></span>
+        <button *ngIf="imonth > 0" mat-button color="primary" (click)="generateAttendance()"
+                matTooltip="Generate Attendance">
+          <mat-icon>featured_play_list</mat-icon>
+        </button>
+      </div>
+      <div class="div-p5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+        <div fxFlex="24%">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Month</mat-label>
+            <mat-select [(ngModel)]="imonth" (selectionChange)="load()" required>
+              <mat-option [disabled]="m.id > currentMonth" *ngFor="let m of tmonths" [value]="m.id">{{m.dyr}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="20%">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Year</mat-label>
+            <mat-select disabled placeholder="Select" name="year" [(ngModel)]="year" (selectionChange)="load()" required>
+              <mat-option *ngFor="let y of years" [value]="y.id">{{y.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="10%"></div>
+          <div fxFlex="15%" class="legends">
+            <div><span class="blue">P</span> Present</div>
+            <div><span class="red">A</span> Absent</div>
+            <div><span class="black">H</span> Half Day</div>
+          </div>
+          <div fxFlex="15%" class="legends">
+            <div><span class="sp-disabled">WO</span> Weekly Off</div>
+            <div><span class="sp-disabled">NH&nbsp;</span> National Holiday</div>
+            <div><span class="sp-disabled">-----</span> Not Available</div>
+          </div>
+        </div>
+</mat-card>
+  </div>
+
+  <div class="div-second" *ngIf="year > 0 && imonth > 0 && students.length > 0">
+    <div class="inner">
+      <div class="example-loading-shade"
+           *ngIf="isLoading1">
+        <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+      </div>
+      <mat-card class="mat-card-for-table">
+        <div class="mat-card-header mat-card-header-for-table">
+          <mat-card-title>Attendance</mat-card-title>
+          <span class="spacer"></span>
+          <button *ngIf="students.length > 0" mat-button color="primary" matTooltip="Save" (click)="Save()"><mat-icon>save</mat-icon></button>
+        </div>
+        <div #scrolldiv class="example-container">
+          <table mat-table [dataSource]="students">
+            <ng-container matColumnDef="name" sticky>
+              <th mat-header-cell *matHeaderCellDef style="width:150px; text-align:left !important;">Employee Name / Days </th>
+              <td mat-cell *matCellDef="let element" style="width:150px; text-align:left !important;"> {{element.staff.staffname}} </td>
+            </ng-container>
+            <ng-container matColumnDef="_1">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 1"> 1</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 1">
+                <button *ngIf="element._1 == 'H' || element._1 == 'P' || element._1 == 'A' || element._1 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_1')">
+                  <mat-icon class="icon-status" [class.red]="element._1 == 'A'" [class.black]="element._1 == 'H'">{{element._1}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._1 != 'H' && element._1 != 'P' && element._1 != 'A' && element._1 != null">{{element._1}}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_2">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 2" style="width:15px;"> 2</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 2">
+                <button *ngIf="element._2 == 'H' || element._2 == 'P' || element._2 == 'A' || element._2 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_2')">
+                  <mat-icon class="icon-status" [class.red]="element._2 == 'A'" [class.black]="element._2 == 'H'">{{element._2}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._2 != 'H' && element._2 != 'P' && element._2 != 'A' && element._2 != null">{{element._2}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_3">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 3" style="width:15px;"> 3</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 3">
+                <button *ngIf="element._3 == 'H' || element._3 == 'P' || element._3 == 'A' || element._3 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_3')">
+                  <mat-icon class="icon-status" [class.red]="element._3 == 'A'" [class.black]="element._3 == 'H'">{{element._3}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._3 != 'H' && element._3 != 'P' && element._3 != 'A' && element._3 != null">{{element._3}}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_4">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 4" style="width:15px;"> 4</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 4">
+                <button *ngIf="element._4 == 'H' || element._4 == 'P' || element._4 == 'A' || element._4 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_4')">
+                  <mat-icon class="icon-status" [class.red]="element._4 == 'A'" [class.black]="element._4 == 'H'">{{element._4}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._4 != 'H' && element._4 != 'P' && element._4 != 'A' && element._4 != null">{{element._4}}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_5">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 5" style="width:15px;"> 5</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 5">
+                <button *ngIf="element._5 == 'H' || element._5 == 'P' || element._5 == 'A' || element._5 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_5')">
+                  <mat-icon class="icon-status" [class.red]="element._5 == 'A'" [class.black]="element._5 == 'H'">{{element._5}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._5 != 'H' && element._5 != 'P' && element._5 != 'A' && element._5 != null">{{element._5}}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_6">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 6" style="width:15px;"> 6</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 6">
+                <button *ngIf="element._6 == 'H' || element._6 == 'P' || element._6 == 'A' || element._6 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_6')">
+                  <mat-icon class="icon-status" [class.red]="element._6 == 'A'" [class.black]="element._6 == 'H'">{{element._6}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._6 != 'H' && element._6 != 'P' && element._6 != 'A' && element._6 != null">{{element._6}}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_7">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 7" style="width:15px;"> 7</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 7">
+                <button *ngIf="element._7 == 'H' || element._7 == 'P' || element._7 == 'A' || element._7 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_7')">
+                  <mat-icon class="icon-status" [class.red]="element._7 == 'A'" [class.black]="element._7 == 'H'">{{element._7}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._7 != 'H' && element._7 != 'P' && element._7 != 'A' && element._7 != null">{{element._7}}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_8">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 8" style="width:15px;"> 8</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 8">
+                <button *ngIf="element._8 == 'H' || element._8 == 'P' || element._8 == 'A' || element._8 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_8')">
+                  <mat-icon class="icon-status" [class.red]="element._8 == 'A'" [class.black]="element._8 == 'H'">{{element._8}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._8 != 'H' && element._8 != 'P' && element._8 != 'A' && element._8 != null">{{element._8}}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_9">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 9" style="width:15px;"> 9</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 9">
+                <button *ngIf="element._9 == 'H' || element._9 == 'P' || element._9 == 'A' || element._9 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_9')">
+                  <mat-icon class="icon-status" [class.red]="element._9 == 'A'" [class.black]="element._9 == 'H'">{{element._9}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._9 != 'H' && element._9 != 'P' && element._9 != 'A' && element._9 != null">{{element._9}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_10">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 10" style="width:15px;"> 10</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 10">
+                <button *ngIf="element._10 == 'H' || element._10 == 'P' || element._10 == 'A' || element._10 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_10')">
+                  <mat-icon class="icon-status" [class.red]="element._10 == 'A'" [class.black]="element._10 == 'H'">{{element._10}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._10 != 'H' && element._10 != 'P' && element._10 != 'A' && element._10 != null">{{element._10}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_11">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 11"> 11</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 11">
+                <button *ngIf="element._11 == 'H' || element._11 == 'P' || element._11 == 'A' || element._11 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_11')">
+                  <mat-icon class="icon-status" [class.red]="element._11 == 'A'" [class.black]="element._11 == 'H'">{{element._11}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._11 != 'H' && element._11 != 'P' && element._11 != 'A' && element._11 != null">{{element._11}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_12">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 12" style="width:15px;"> 12</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 12">
+                <button *ngIf="element._12 == 'H' || element._12 == 'P' || element._12 == 'A' || element._12 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_12')">
+                  <mat-icon class="icon-status" [class.red]="element._12 == 'A'" [class.black]="element._12 == 'H'">{{element._12}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._12 != 'H' && element._12 != 'P' && element._12 != 'A' && element._12 != null">{{element._12}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_13">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 13" style="width:15px;"> 13</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 13">
+                <button *ngIf="element._13 == 'H' || element._13 == 'P' || element._13 == 'A' || element._13 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_13')">
+                  <mat-icon class="icon-status" [class.red]="element._13 == 'A'" [class.black]="element._13 == 'H'">{{element._13}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._13 != 'H' && element._13 != 'P' && element._13 != 'A' && element._13 != null">{{element._13}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_14">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 14" style="width:15px;"> 14</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 14">
+                <button *ngIf="element._14 == 'H' || element._14 == 'P' || element._14 == 'A' || element._14 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_14')">
+                  <mat-icon class="icon-status" [class.red]="element._14 == 'A'" [class.black]="element._14 == 'H'">{{element._14}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._14 != 'H' && element._14 != 'P' && element._14 != 'A' && element._14 != null">{{element._14}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_15">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 15" style="width:15px;"> 15</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 15">
+                <button *ngIf="element._15 == 'H' || element._15 == 'P' || element._15 == 'A' || element._15 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_15')">
+                  <mat-icon class="icon-status" [class.red]="element._15 == 'A'" [class.black]="element._15 == 'H'">{{element._15}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._15 != 'H' && element._15 != 'P' && element._15 != 'A' && element._15 != null">{{element._15}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_16">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 16" style="width:15px;"> 16</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 16">
+                <button *ngIf="element._16 == 'H' || element._16 == 'P' || element._16 == 'A' || element._16 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_16')">
+                  <mat-icon class="icon-status" [class.red]="element._16 == 'A'" [class.black]="element._16 == 'H'">{{element._16}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._16 != 'H' && element._16 != 'P' && element._16 != 'A' && element._16 != null">{{element._16}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_17">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 17" style="width:15px;"> 17</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 17">
+                <button *ngIf="element._17 == 'H' || element._17 == 'P' || element._17 == 'A' || element._17 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_17')">
+                  <mat-icon class="icon-status" [class.red]="element._17 == 'A'" [class.black]="element._17 == 'H'">{{element._17}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._17 != 'H' && element._17 != 'P' && element._17 != 'A' && element._17 != null">{{element._17}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_18">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 18" style="width:15px;"> 18</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 18">
+                <button *ngIf="element._18 == 'H' || element._18 == 'P' || element._18 == 'A' || element._18 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_18')">
+                  <mat-icon class="icon-status" [class.red]="element._18 == 'A'" [class.black]="element._18 == 'H'">{{element._18}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._18 != 'H' && element._18 != 'P' && element._18 != 'A' && element._18 != null">{{element._18}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_19">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 19" style="width:15px;"> 19</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 19">
+                <button *ngIf="element._19 == 'H' || element._19 == 'P' || element._19 == 'A' || element._19 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_19')">
+                  <mat-icon class="icon-status" [class.red]="element._19 == 'A'" [class.black]="element._19 == 'H'">{{element._19}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._19 != 'H' && element._19 != 'P' && element._19 != 'A' && element._19 != null">{{element._19}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_20">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 20" style="width:15px;"> 20</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 20">
+                <button *ngIf="element._20 == 'H' || element._20 == 'P' || element._20 == 'A' || element._20 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_20')">
+                  <mat-icon class="icon-status" [class.red]="element._20 == 'A'" [class.black]="element._20 == 'H'">{{element._20}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._20 != 'H' && element._20 != 'P' && element._20 != 'A' && element._20 != null">{{element._20}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_21">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 21" style="width:15px;"> 21</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 21">
+                <button *ngIf="element._21 == 'H' || element._21 == 'P' || element._21 == 'A' || element._21 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_21')">
+                  <mat-icon class="icon-status" [class.red]="element._21 == 'A'" [class.black]="element._21 == 'H'">{{element._21}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._21 != 'H' && element._21 != 'P' && element._21 != 'A' && element._21 != null">{{element._21}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_22">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 22" style="width:15px;"> 22</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 22">
+                <button *ngIf="element._22 == 'H' || element._22 == 'P' || element._22 == 'A' || element._22 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_22')">
+                  <mat-icon class="icon-status" [class.red]="element._22 == 'A'" [class.black]="element._22 == 'H'">{{element._22}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._22 != 'H' && element._22 != 'P' && element._22 != 'A' && element._22 != null">{{element._22}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_23">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 23" style="width:15px;"> 23</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 23">
+                <button *ngIf="element._23 == 'H' || element._23 == 'P' || element._23 == 'A' || element._23 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_23')">
+                  <mat-icon class="icon-status" [class.red]="element._23 == 'A'" [class.black]="element._23 == 'H'">{{element._23}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._23 != 'H' && element._23 != 'P' && element._23 != 'A' && element._23 != null">{{element._23}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_24">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 24" style="width:15px;"> 24</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 24">
+                <button *ngIf="element._24 == 'H' || element._24 == 'P' || element._24 == 'A' || element._24 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_24')">
+                  <mat-icon class="icon-status" [class.red]="element._24 == 'A'" [class.black]="element._24 == 'H'">{{element._24}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._24 != 'H' && element._24 != 'P' && element._24 != 'A' && element._24 != null">{{element._24}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_25">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 25" style="width:15px;"> 25</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 25">
+                <button *ngIf="element._25 == 'H' || element._25 == 'P' || element._25 == 'A' || element._25 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_25')">
+                  <mat-icon class="icon-status" [class.red]="element._25 == 'A'" [class.black]="element._25 == 'H'">{{element._25}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._25 != 'H' && element._25 != 'P' && element._25 != 'A' && element._25 != null">{{element._25}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_26">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 26" style="width:15px;"> 26</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 26">
+                <button *ngIf="element._26 == 'H' || element._26 == 'P' || element._26 == 'A' || element._26 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_26')">
+                  <mat-icon class="icon-status" [class.red]="element._26 == 'A'" [class.black]="element._26 == 'H'">{{element._26}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._26 != 'H' && element._26 != 'P' && element._26 != 'A' && element._26 != null">{{element._26}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_27">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 27" style="width:15px;"> 27</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 27">
+                <button *ngIf="element._27 == 'H' || element._27 == 'P' || element._27 == 'A' || element._27 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_27')">
+                  <mat-icon class="icon-status" [class.red]="element._27 == 'A'" [class.black]="element._27 == 'H'">{{element._27}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._27 != 'H' && element._27 != 'P' && element._27 != 'A' && element._27 != null">{{element._27}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_28">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 28" style="width:15px;"> 28</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 28">
+                <button *ngIf="element._28 == 'H' || element._28 == 'P' || element._28 == 'A' || element._28 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_28')">
+                  <mat-icon class="icon-status" [class.red]="element._28 == 'A'" [class.black]="element._28 == 'H'">{{element._28}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._28 != 'H' && element._28 != 'P' && element._28 != 'A' && element._28 != null">{{element._28}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_29">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 29" style="width:15px;"> 29</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 29">
+                <button *ngIf="element._29 == 'H' || element._29 == 'P' || element._29 == 'A' || element._29 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_29')">
+                  <mat-icon class="icon-status" [class.red]="element._29 == 'A'" [class.black]="element._29 == 'H'">{{element._29}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._29 != 'H' && element._29 != 'P' && element._29 != 'A' && element._29 != null">{{element._29}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_30">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 30" style="width:15px;"> 30</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 30">
+                <button *ngIf="element._30 == 'H' || element._30 == 'P' || element._30 == 'A' || element._30 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_30')">
+                  <mat-icon class="icon-status" [class.red]="element._30 == 'A'" [class.black]="element._30 == 'H'">{{element._30}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._30 != 'H' && element._30 != 'P' && element._30 != 'A' && element._30 != null">{{element._30}}</span>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="_31">
+              <th mat-header-cell *matHeaderCellDef [class.current]="currentdate == 31" style="width:15px;"> 31</th>
+              <td mat-cell *matCellDef="let element; let i = index" [class.current]="currentdate == 31">
+                <button *ngIf="element._31 == 'H' || element._31 == 'P' || element._31 == 'A' || element._31 == null" mat-button color="primary"
+                        (click)="UpdateStatus(element, i, '_31')">
+                  <mat-icon class="icon-status" [class.red]="element._31 == 'A'" [class.black]="element._31 == 'H'">{{element._31}}</mat-icon>
+                </button>
+                <span class="sp-disabled" *ngIf="element._31 != 'H' && element._31 != 'P' && element._31 != 'A' && element._31 != null">{{element._31}}</span>
+
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div class="div-second" *ngIf="students.length == 0 && !isLoading">
+    <mat-card>
+      <div class="example-loading-shade" *ngIf="isLoading1">
+        <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+      </div>
+      <div class="mat-card-header">
+        <mat-card-title>Alert</mat-card-title>
+        <span class="spacer"></span>
+      </div>
+      <ul  class="default-message">
+        <li>Records not found!</li>
+        <br />
+        <li>Please click generate attendance button to get attendace sheet for selected month!</li>
+        <br />
+      </ul>
+    </mat-card>
+  </div>
+</div>
+

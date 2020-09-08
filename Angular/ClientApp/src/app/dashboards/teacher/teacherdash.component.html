@@ -1,0 +1,214 @@
+<div [@simpleFadeAnimation]="'in'">
+  <form class="form-signin" #loginForm="ngForm" [style.fontSize.px]="14">
+    <div *ngIf="staffid > 0">
+      <mat-card class="inner" *ngIf="dataCount != null">
+        <div class="example-loading-shade" *ngIf="isLoading">
+          <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header">
+          <mat-card-title>Statistics</mat-card-title>
+          <span class="spacer"></span>
+          <!--<button type="button" mat-button color="primary" matTooltip="Select another student" (click)="selectAnotherStudent()"><mat-icon>more</mat-icon></button>-->
+        </div>
+        <mat-card-content>
+          <div class="div-p5">
+            <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+                 fxLayoutAlign="start">
+              <div fxFlex="20%">
+                <div class="stat blue">
+                  <div class="flex-stat">
+                    <div class="visual">
+                      <mat-icon>school</mat-icon>
+                    </div>
+                    <div class="details">
+                      <div class="number">
+                        {{dataCount.students}}
+                      </div>
+                      <div class="desc">
+                        Students
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more">
+                    search
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="20%">
+                <div class="stat green">
+                  <div class="flex-stat">
+                    <div class="visual">
+                      <mat-icon>multiline_chart</mat-icon>
+                    </div>
+                    <div class="details">
+                      <div class="number">
+                        {{currencycode | currencySymbol}} {{dataCount.collections | currency : ' '}}
+                      </div>
+                      <div class="desc">
+                        Collections
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more">
+                    {{dataCount.month }}
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="20%">
+                <div class="stat yellow">
+                  <div class="flex-stat">
+                    <div class="visual">
+                      <mat-icon>account_balance_wallet</mat-icon>
+                    </div>
+                    <div class="details">
+                      <div class="number">
+                        {{currencycode | currencySymbol}} {{dataCount.salaries| currency : ' '}}
+                      </div>
+                      <div class="desc">
+                        Salary
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more">
+                    {{dataCount.month }}
+                  </div>
+                </div>
+
+              </div>
+              <div fxFlex="20%">
+                <div class="stat orange">
+                  <div class="flex-stat">
+                    <div class="visual">
+                      <mat-icon>pie_chart</mat-icon>
+                    </div>
+                    <div class="details">
+                      <div class="number">
+                        {{currencycode | currencySymbol}} {{dataCount.expenses| currency : ' '}}
+                      </div>
+                      <div class="desc">
+                        Expenses
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more">
+                    {{dataCount.month }}
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="20%">
+                <div class="stat purple">
+                  <div class="flex-stat">
+                    <div class="visual">
+                      <mat-icon>{{(dataCount.profit > 0) ? 'thumb_up_alt' : 'thumb_down_alt'}}</mat-icon>
+                    </div>
+                    <div class="details">
+                      <div class="number">
+                        {{currencycode | currencySymbol}} {{dataCount.profit| currency : ' '}}
+                      </div>
+                      <div class="desc">
+                        Profit
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more">
+                    {{dataCount.month }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+      <div class="div-second">
+        <mat-card class="mat-card-for-table">
+          <div class="example-loading-shade" *ngIf="isLoading1">
+            <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+          </div>
+          <div class="mat-card-header mat-card-header-for-table">
+            <mat-card-title>Teacher's Time Table</mat-card-title>
+            <span class="spacer"></span>
+          </div>
+          <mat-card-content>
+            <table mat-table [dataSource]="timetabledata" style="width:100%;" class="schedule">
+              <ng-container matColumnDef="fromtime">
+                <th mat-header-cell *matHeaderCellDef style="width:100px; text-align:left !important;">Time / Days </th>
+                <td mat-cell *matCellDef="let element" style="width:100px; text-align:left !important;">
+                  <div style="display:flex; font-weight:600">
+                    {{toTime(element.fromtime) | date : 'hh:mm a'}} - {{toTime(element.totime) | date : 'hh:mm a'}}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="_sunday">
+                <th mat-header-cell *matHeaderCellDef style="width:15px;"> Sunday</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.sunday != null">
+                    <span class="class-name">{{element.sunday.class.standard}}</span><br />
+                    <span class="subject-name">({{element.sunday.subject.subject }})</span>
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="_monday">
+                <th mat-header-cell *matHeaderCellDef style="width:15px;"> Monday</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.monday != null">
+                    <span class="class-name">{{element.monday.class.standard}}</span><br />
+                    <span class="subject-name">({{element.monday.subject.subject }})</span>
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="_tuesday">
+                <th mat-header-cell *matHeaderCellDef style="width:15px;"> Tuesday</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.tuesday != null">
+                    <span class="class-name">{{element.tuesday.class.standard}}</span><br />
+                    <span class="subject-name">({{element.tuesday.subject.subject }})</span>
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="_wednesday">
+                <th mat-header-cell *matHeaderCellDef style="width:15px;"> Wednesday</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.wednesday != null">
+                    <span class="class-name">{{element.wednesday.class.standard}}</span><br />
+                    <span class="subject-name">({{element.wednesday.subject.subject }})</span>
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="_thursday">
+                <th mat-header-cell *matHeaderCellDef style="width:15px;"> Thursday</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.thursday != null">
+                    <span class="class-name">{{element.thursday.class.standard}}</span><br />
+                    <span class="subject-name">({{element.thursday.subject.subject }})</span>
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="_friday">
+                <th mat-header-cell *matHeaderCellDef style="width:15px;"> Friday</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.friday != null">
+                    <span class="class-name">{{element.friday.class.standard}}</span><br />
+                    <span class="subject-name">({{element.friday.subject.subject }})</span>
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="_saturday">
+                <th mat-header-cell *matHeaderCellDef style="width:15px;"> Saturday</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.saturday != null">
+                    <span class="class-name">{{element.saturday.class.standard}}</span><br />
+                    <span class="subject-name">({{element.saturday.subject.subject }})</span>
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; "></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+</div>

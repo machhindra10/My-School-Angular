@@ -1,0 +1,245 @@
+<div [@simpleFadeAnimation]="'in'">
+
+  <mat-card>
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+      <div class="example-loading-shade" *ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+      </div>
+      <div class="mat-card-header">
+        <button type="button" mat-button color="primary" matTooltip="Save" (click)="Back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-card-title>Staff Information</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Save">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+      <div class="div-p5">
+        <div fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+             fxLayoutAlign="start">
+          <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+               fxLayoutAlign="start">
+            <div fxFlex="33%">
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput name="subject" [(ngModel)]="staff1.staffname" maxlength="500" required>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Designation</mat-label>
+                <mat-select name="desigid" [(ngModel)]="staff1.desigid" required>
+                  <mat-option *ngFor="let d of designations" [value]="d.id">
+                    {{d.designname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Employee Code</mat-label>
+                <input type="text" matInput name="code" [(ngModel)]="staff1.code" maxlength="10" required>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%" fxLayoutAlign="end">
+              <div class="example-loading-shade" *ngIf="isLoading">
+                <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+              </div>
+              <input style="display: none" type="file" (change)="onFileChanged($event)"
+                     accept="image/x-png, image/gif, image/jpeg" #fileInput>
+              <button type="button" mat-button color="primary" matTooltip="Edit" (click)="fileInput.click()">
+                <mat-icon class="sm-icon">edit</mat-icon>
+              </button>
+              <button type="button" mat-button color="primary" matTooltip="Remove" (click)="removephoto()">
+                <mat-icon class="sm-icon">delete</mat-icon>
+              </button>
+              <mat-card class="example-card mat-card2">
+                <img [src]="staff1.photo" width="50" height="50" />
+              </mat-card>
+            </div>
+          </div>
+          <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+               fxLayoutAlign="start">
+            <div fxFlex="33%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Address</mat-label>
+                <input type="text" matInput name="address" [(ngModel)]="staff1.address" maxlength="500">
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Mobile</mat-label>
+                <input type="text" matInput name="mobile" [(ngModel)]="staff1.mobile" pattern="\d*" maxlength="13"
+                       required>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Phone</mat-label>
+                <input type="text" matInput name="phone" [(ngModel)]="staff1.phone" pattern="\d*" maxlength="15">
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Aadhar No</mat-label>
+                <input type="text" matInput name="aadharno" [(ngModel)]="staff1.aadharno" maxlength="12" required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+               fxLayoutAlign="start">
+            <div fxFlex="33%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput name="email" [(ngModel)]="staff1.email" maxlength="50" required>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Birth Date</mat-label>
+                <input matInput readonly [matDatepicker]="picker2" name="dob" [(ngModel)]="staff1.dob"
+                       datetime="dd/MM/yyyy" required>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Joining Date</mat-label>
+                <input matInput readonly [matDatepicker]="picker" name="doj" [(ngModel)]="staff1.doj"
+                       datetime="dd/MM/yyyy" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Leaving Date</mat-label>
+                <input matInput readonly [matDatepicker]="picker1" name="dol" [(ngModel)]="staff1.dol"
+                       datetime="dd/MM/yyyy">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+
+
+  <mat-card *ngIf="id > 0" class="mat-card-for-table div-second">
+    <div class="example-loading-shade" *ngIf="isLoading1">
+      <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>
+        Payroll Details <span class="description">(click edit to update staff payroll)</span>
+      </mat-card-title>
+      <span class="spacer"></span>
+      <button *ngIf="!edit" mat-button color="primary" matTooltip="Edit" (click)="EditPayroll()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="edit" mat-button color="primary" matTooltip="Save" (click)="SavePayroll()">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu" matTooltip="more">
+        <mat-icon>more_vertical</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="GeneratePayroll(staff1.id)">
+          <mat-icon>autorenew</mat-icon>
+          <!--<span>-->Update payroll from templete<!--</span>-->
+        </button>
+      </mat-menu>
+    </div>
+  </mat-card>
+
+  <div *ngIf="id > 0" class="div-second" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap
+       fxLayoutGap="15px" fxLayoutAlign="start">
+
+    <div fxFlex="50%">
+      <mat-card class="mat-card-for-table">
+        <div class="mat-card-header mat-card-header-for-table">
+          <mat-card-title>Earnings</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <table mat-table [dataSource]="staffpayrollE" style="width:100%;">
+          <ng-container matColumnDef="head">
+            <th mat-header-cell *matHeaderCellDef> Perticulars </th>
+            <td mat-cell *matCellDef="let element"> {{element.head }} </td>
+          </ng-container>
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type }} </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef class="col-right-100">
+              Amount ({{currencycode | currencySymbol}} )
+            </th>
+            <td mat-cell *matCellDef="let element" class="col-right-100">
+              <div *ngIf="!edit" class="div-right-100">{{element.amount}}</div>
+              <input *ngIf="edit" type="text" class="editable" name="amount" matInput [(ngModel)]="element.amount"
+                     autocomplete="off" required />
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button color="primary" (click)="Delete(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" color="primary"
+              [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
+        </table>
+      </mat-card>
+
+    </div>
+
+    <div fxFlex="50%">
+      <mat-card class="mat-card-for-table">
+        <div class="mat-card-header mat-card-header-for-table">
+          <mat-card-title>Deductions</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <table mat-table [dataSource]="staffpayrollD" style="width:100%;">
+          <ng-container matColumnDef="head">
+            <th mat-header-cell *matHeaderCellDef> Perticulars </th>
+            <td mat-cell *matCellDef="let element"> {{element.head }} </td>
+          </ng-container>
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type }} </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef class="col-right-100">
+              Amount ({{currencycode | currencySymbol}} )
+            </th>
+            <td mat-cell *matCellDef="let element" class="col-right-100">
+              <div *ngIf="!edit" class="div-right-100">{{element.amount}}</div>
+              <input *ngIf="edit" type="text" class="editable" matInput [(ngModel)]="element.amount"
+                     autocomplete="off" />
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button color="primary" (click)="Delete(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" color="primary"
+              [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
+        </table>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

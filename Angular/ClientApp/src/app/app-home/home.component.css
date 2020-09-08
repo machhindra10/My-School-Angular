@@ -1,0 +1,30 @@
+/* css for spinner */
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:580px;
+  /*background: rgba(0, 0, 0, 0.15);*/
+}
+
+.inner {
+  position: relative;
+}
+
+.spinner {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/deep/.mat-progress-spinner svg {
+  width: 40px !important;
+  height: 40px !important;
+}
+/* css for spinner end */

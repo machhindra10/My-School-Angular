@@ -1,0 +1,17 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>Student Fees</div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Fees Type</mat-label>
+      <input type="text" matInput name="feestype" [(ngModel)]="data.feesType" maxlength="50" required cdkFocusInitial>
+    </mat-form-field>
+    <mat-form-field appearance="outline"  floatLabel="always">
+      <mat-label>Amount</mat-label>
+      <input type="text" matInput name="amount" [(ngModel)]="data.amount" maxlength="13" pattern="^\d*(\.\d{0,2})?$" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

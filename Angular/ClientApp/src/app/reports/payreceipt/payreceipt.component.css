@@ -1,0 +1,27 @@
+.invoice {
+  page-break-after: always;
+}
+
+.invoice:last-child {
+  page-break-after: avoid;
+}
+
+.div-top-flex{
+  /*display:flex;*/
+  padding:10px;
+  margin-bottom:15px;
+}
+.full{
+  width:100%;
+  padding:15px;
+  background-color:white;
+}
+.headings {
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 20px;
+  padding-bottom: 0;
+  background: #fff;
+  text-transform: uppercase;
+}

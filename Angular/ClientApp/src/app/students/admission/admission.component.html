@@ -1,0 +1,77 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade"
+       *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+    <div>
+      <mat-card>
+        <div class="mat-card-header">
+          <!--<button type="button" mat-button color="primary" matTooltip="Back" (click)="Back()"><mat-icon>arrow_back</mat-icon></button>-->
+          <mat-card-title *ngIf="studentid == 0">Search</mat-card-title>
+          <mat-card-title *ngIf="studentid > 0">Student Demographic</mat-card-title>
+          <span class="spacer"></span>
+          <button type="button" mat-button color="primary" matTooltip="Select another student" *ngIf="studentid > 0" (click)="selectAnotherStudent()"><mat-icon>search</mat-icon></button>
+        </div>
+
+        <mat-card-content>
+          <div class="div-p5">
+            <div *ngIf="studentid == 0" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+              <div fxFlex="33%">
+                <app-ucsearch (afterSelect)="onAfterSelect($event)"></app-ucsearch>
+              </div>
+            </div>
+            <div *ngIf="studentid > 0">
+              <app-ucstudent [studentid]="studentid"></app-ucstudent>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div *ngIf="studentid > 0 && !isLoading3"   class="div-second">
+      <div *ngIf="!isadmitted">
+        <mat-card>
+          <div class="mat-card-header">
+            <mat-card-title>Select Class</mat-card-title>
+            <span class="spacer"></span>
+            <button mat-button color="primary" matTooltip="Save" *ngIf="!isadmitted && studentid > 0"><mat-icon>save</mat-icon></button>
+          </div>
+          <div class="div-p5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+            <div fxFlex="33%">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Class</mat-label>
+                <mat-select name="classid" [(ngModel)]="tstudentadmission.classid" required>
+                  <mat-option *ngFor="let s of classes" [value]="s.id">
+                    {{s.standard}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex="22%">
+              <mat-form-field appearance="outline"  floatLabel="always">
+                <mat-label>Date</mat-label>
+                <input matInput readonly [matDatepicker]="picker" name="datecreated" [(ngModel)]="tstudentadmission.datecreated" datetime="dd/MM/yyyy" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div *ngIf="isadmitted">
+        <mat-card>
+          <div class="mat-card-header">
+            <mat-card-title>Admission status</mat-card-title>
+            <span class="spacer"></span>
+          </div>
+          <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+            <div fxFlex="100%">
+              <mat-card-title  style="padding:10px;">Student Already admitted!</mat-card-title>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+  </form>
+</div>

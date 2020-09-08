@@ -1,0 +1,213 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+    <mat-card>
+      <div class="mat-card-header">
+        <button type="button" mat-button color="primary" matTooltip="Back" (click)="Back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-card-title *ngIf="studentid == 0">Student Registration</mat-card-title>
+        <mat-card-title *ngIf="studentid > 0">Edit Student</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Save">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+    <div class="div-second" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+      fxLayoutAlign="start">
+      <div fxFlex="50%">
+        <mat-card>
+          <div class="mat-card-header">
+            <mat-card-title style="padding-bottom:10px;">Student Demographic</mat-card-title>
+          </div>
+          <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap
+            fxLayoutGap="15px" fxLayoutAlign="start">
+
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="31%">
+                <mat-form-field appearance="outline">
+                  <mat-label>PRN Number</mat-label>
+                  <input type="text" disabled matInput name="prnno" [(ngModel)]="student.prnno" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="32%">
+
+              </div>
+
+              <div fxFlex="32%" fxLayoutGap="5px" fxLayoutAlign="end" class="inner">
+
+                <div class="example-loading-shade" *ngIf="isLoading1">
+                  <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+                </div>
+                <input style="display: none" type="file" (change)="onFileChanged($event)"
+                  accept="image/x-png, image/gif, image/jpeg" #fileInput>
+                <button type="button" mat-button color="primary" matTooltip="Edit" (click)="fileInput.click()"
+                  class="sm-icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button type="button" mat-button color="primary" matTooltip="Remove" (click)="removephoto()"
+                  class="sm-icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <mat-card class="example-card mat-card2">
+                  <img [src]="student.photo" width="50" height="50" />
+                </mat-card>
+              </div>
+
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="31%">
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input type="text" matInput name="fname" [(ngModel)]="student.fname" maxlength="25" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="31%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Middle Name</mat-label>
+                  <input type="text" matInput name="mname" [(ngModel)]="student.mname" maxlength="25" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="31%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input type="text" matInput name="lname" [(ngModel)]="student.lname" maxlength="25" required>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="99%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address</mat-label>
+                  <textarea matInput name="address" [(ngModel)]="student.address" maxlength="500"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="49%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Gender</mat-label>
+                  <mat-select name="gender" [(ngModel)]="student.gender" required>
+                    <mat-option *ngFor="let g of genders" [value]="g.gname">
+                      {{g.gname}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="49%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Cast</mat-label>
+                  <mat-select name="castid" [(ngModel)]="student.castid" required>
+                    <mat-option *ngFor="let c of casts" [value]="c.id">
+                      {{c.code}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="31%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Aadhar Number</mat-label>
+                  <input matInput name="aadharno" [(ngModel)]="student.aadharno" maxlength="12">
+                </mat-form-field>
+              </div>
+              <div fxFlex="31%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Mobile</mat-label>
+                  <input matInput name="mobile" [(ngModel)]="student.mobile" pattern="\d*" maxlength="13">
+                </mat-form-field>
+              </div>
+              <div fxFlex="31%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone</mat-label>
+                  <input matInput name="phone" [(ngModel)]="student.phone" pattern="\d*" maxlength="15">
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="65%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input type="text" matInput name="email" email [(ngModel)]="student.email" maxlength="50">
+                </mat-form-field>
+              </div>
+
+
+              <div fxFlex="32%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Birthdate</mat-label>
+                  <input matInput readonly [matDatepicker]="picker" name="dob" [(ngModel)]="student.dob"
+                    datetime="dd/MM/yyyy" required>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="50%">
+        <mat-card>
+          <div class="example-loading-shade" *ngIf="isLoading2">
+            <mat-spinner *ngIf="isLoading2" class="spinner"></mat-spinner>
+          </div>
+          <div class="mat-card-header">
+            <mat-card-title style="padding-bottom:10px;">Guardian Details</mat-card-title>
+          </div>
+          <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap
+            fxLayoutGap="15px" fxLayoutAlign="start">
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="70%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Guardian</mat-label>
+                  <mat-select name="guardianid" [(ngModel)]="student.guardianid"
+                    (selectionChange)="guardianSelectionChange()" required>
+                    <mat-option *ngFor="let g of guardians" [value]="g.id">
+                      {{g.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="30%" style="padding-top: 10px;">
+                <button type="button" mat-button color="primary" matTooltip="Add New" (click)="addGuardian()"
+                  class="sm-icon">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
+                <button type="button" *ngIf="canEdit" mat-button color="primary" matTooltip="Edit"
+                  (click)="editGuardian()" class="sm-icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+              fxLayoutAlign="start">
+              <div fxFlex="67%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Relation</mat-label>
+                  <input matInput name="grelation" [(ngModel)]="student.guardianRelation" maxlength="50" required>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+          </div>
+        </mat-card>
+      </div>
+
+    </div>
+
+  </form>
+</div>

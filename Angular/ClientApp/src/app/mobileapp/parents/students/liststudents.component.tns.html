@@ -1,0 +1,23 @@
+<ActionBar title="Students" class="title"></ActionBar>
+<FlexboxLayout class="page">
+  <StackLayout class="form">
+    <PreviousNextView>
+      <ScrollView>
+        <StackLayout>
+          <ListView height="500" [items]="students">
+            <ng-template let-student="item" let-i="index">
+              <StackLayout orientation="vertical" class="list-group-item">
+                <Label class="name" [text]="student.fname + ' ' + student.mname + ' ' + student.lname"></Label>
+                <Label class="details"
+                  [text]="(student.tStudentAdmission.length > 0 ?  student.tStudentAdmission[0].class.standard : 'NA')"></Label>
+
+              </StackLayout>
+            </ng-template>
+          </ListView>
+        </StackLayout>
+
+      </ScrollView>
+    </PreviousNextView>
+
+  </StackLayout>
+</FlexboxLayout>

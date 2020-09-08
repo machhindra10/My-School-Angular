@@ -1,0 +1,70 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <mat-card class="mat-card-for-table">
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>Classes</mat-card-title>
+      <span class="spacer"></span>
+      <button mat-button color="primary" matTooltip="Add" (click)="Add(0)">
+        <mat-icon class="add-icon">add_circle</mat-icon>
+      </button>
+    </div>
+    <table mat-table [dataSource]="classes" style="width:100%;">
+      <!-- Column -->
+      <ng-container matColumnDef="standard">
+        <th mat-header-cell *matHeaderCellDef> Standard </th>
+        <td mat-cell *matCellDef="let element"> {{element.standard }} </td>
+      </ng-container>
+      <ng-container matColumnDef="classteacher">
+        <th mat-header-cell *matHeaderCellDef [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd"> Class Teacher </th>
+        <td mat-cell *matCellDef="let element" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd">
+          {{element.classTeacher.length > 0 ? element.classTeacher[0].staff.staffname : "" }} </td>
+      </ng-container>
+      <ng-container matColumnDef="capacity">
+        <th mat-header-cell *matHeaderCellDef class="center-80" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd">
+          Capacity </th>
+        <td mat-cell *matCellDef="let element" class="center-80" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd">
+          {{element.capacity }} </td>
+      </ng-container>
+      <ng-container matColumnDef="admitted">
+        <th mat-header-cell *matHeaderCellDef class="center-60" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd">
+          Admitted </th>
+        <td mat-cell *matCellDef="let element" class="center-60" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd">
+          {{element.tStudentAdmission.length }} </td>
+      </ng-container>
+      <ng-container matColumnDef="totalfees">
+        <th mat-header-cell *matHeaderCellDef style="width:80px;" class="center-50" [ngClass.lg]="sh" [ngClass.sm]="hd"
+          ngClass.xs="hd">
+          Fees ({{currencycode | currencySymbol}}) </th>
+        <td mat-cell *matCellDef="let element" class="right-50" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd">
+          {{getTotalFees(element.classFees) | currency : ' '}} </td>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Edit</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="primary" (click)="Add(element.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="primary" (click)="Delete(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="enabled">
+        <th mat-header-cell *matHeaderCellDef class="center-50"> Blocked</th>
+        <td mat-cell *matCellDef="let element" class="slide-center">
+          <mat-slide-toggle class="example-margin" (change)="Update(element)" color="primary"
+            [checked]="element.disabled"></mat-slide-toggle>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

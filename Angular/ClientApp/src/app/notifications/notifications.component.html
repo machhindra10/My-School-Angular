@@ -1,0 +1,33 @@
+<h1 style="margin-left:10px;">Notifications</h1>
+<mat-card class="mat-card-for-table" style="border:solid 1px lightgray;">
+  <div class="mat-card-header mat-card-header-for-table">
+    <mat-card-title>Upcoming Birthdays</mat-card-title>
+    <span class="spacer"></span>
+  </div>
+  <!--<div style="padding:30px; font-size:12px;" *ngIf="studentbirthdays.length == 0">No student birthdays</div>-->
+  <table *ngIf="studentbirthdays.length > 0" mat-table [dataSource]="studentbirthdays" style="width:100%;">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Student Birthday's </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="dayname">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element"> {{element.dayName}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <!--<div style="padding:30px; font-size:12px;" *ngIf="staffbirthdays.length == 0">No staff birthdays</div>-->
+  <table *ngIf="staffbirthdays.length > 0" mat-table [dataSource]="staffbirthdays" style="width:100%;">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Staff Birthday's </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="dayname">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.dayName}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>

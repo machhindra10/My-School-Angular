@@ -1,0 +1,58 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+    <mat-card>
+      <div class="mat-card-header">
+        <!--<button type="button" mat-button color="primary" matTooltip="Back" (click)="Back()"><mat-icon>arrow_back</mat-icon></button>-->
+        <mat-card-title>Send SMS Message</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Send">
+          <mat-icon>send</mat-icon>
+        </button>
+        <button type="button" mat-button color="primary" (click)="openSettingsDialog()" matTooltip="Settings">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+      <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+        fxLayoutAlign="start">
+
+        <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+          fxLayoutAlign="start">
+          <div fxFlex="25%">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Classes</mat-label>
+              <mat-select placeholder="Select" name="classid" [(ngModel)]="messageData.classids" required multiple>
+                <mat-option *ngFor="let c of classes" [value]="c.id">
+                  {{c.standard}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="25%">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>To Whom</mat-label>
+              <mat-select placeholder="Select" name="towhom" [(ngModel)]="messageData.towhom" required multiple>
+                <mat-option value="P">Parents</mat-option>
+                <mat-option value="S">Students</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+          fxLayoutAlign="start">
+          <div fxFlex="52%">
+            <mat-form-field appearance="outline" floatLabel="always" class="text-hint">
+              <mat-label>Message</mat-label>
+              <textarea matInput #message1 [(ngModel)]="messageData.message" maxlength="500"
+                [ngModelOptions]="{standalone: true}" required></textarea>
+              <mat-hint align="end">{{message1.value.length}} / 500</mat-hint>
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>

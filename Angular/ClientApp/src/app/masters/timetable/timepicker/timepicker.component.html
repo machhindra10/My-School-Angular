@@ -1,0 +1,21 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    Time Period
+  </div>
+  <div mat-dialog-content class="schedule">
+    <div style="display:flex">
+      <mat-form-field appearance="outline">
+        <mat-label>From</mat-label>
+        <input type="time" matInput name="fromtime" [(ngModel)]="data.fromtime" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>To</mat-label>
+        <input type="time" matInput name="totime" [(ngModel)]="data.totime" required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

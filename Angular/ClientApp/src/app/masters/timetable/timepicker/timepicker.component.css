@@ -1,0 +1,17 @@
+.schedule /deep/ .mat-form-field {
+  margin: 5px;
+  margin-left: 0px;
+}
+
+.schedule /deep/ .mat-form-field-appearance-outline .mat-form-field-infix {
+  /*padding: 1em 0 1em 0;*/
+  padding: 7px;
+}
+
+.schedule /deep/ .mat-form-field {
+  width: 150px !important;
+}
+
+.schedule .time /deep/ .mat-form-field {
+  width: 130px !important;
+}

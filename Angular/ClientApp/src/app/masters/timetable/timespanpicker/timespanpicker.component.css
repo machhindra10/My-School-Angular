@@ -1,0 +1,12 @@
+  
+
+
+
+.schedule /deep/ .mat-form-field {
+  width: 150px !important;
+  padding-left:10px;
+}
+
+.schedule .time /deep/ .mat-form-field {
+  width: 130px !important;
+}

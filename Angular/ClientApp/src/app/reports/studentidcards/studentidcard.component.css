@@ -1,0 +1,124 @@
+.invoice {
+  page-break-after: always;
+}
+
+  .invoice:last-child {
+    page-break-after: avoid;
+  }
+.fontsize{
+  font-size:14px;
+  
+}
+
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+
+/* Small table */
+/deep/ tr.mat-footer-row, tr.mat-row {
+  height: 35px !important;
+}
+
+
+
+/deep/ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type {
+  padding-right: 15px !important;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 20px;
+}
+.headings {
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 20px;
+  /*padding-bottom: 0;*/
+  background: #fff;
+  text-transform: uppercase;
+}
+.subheader-row {
+  padding: 0px;
+  background: #fff;
+  padding-bottom: 0px;
+  font-size: 14px;
+}
+.title {
+  font-weight: 600;
+  width:75px;
+  vertical-align: top;
+  font-size: 12px;
+}
+.desc{
+  font-size: 12px;
+}
+/deep/.mat-grid-tile .mat-figure {  
+  display: block !important;  
+}
+.mat-card2 {
+  border-radius: 4px !important;
+  padding: 3px !important;
+  width: 100px !important;
+  height: 150px !important;
+}
+
+.logo {
+  position: sticky;
+  top: 0;
+  height: 64px;
+  color: white;
+  z-index: 2;
+  align-content:flex-start;
+  width: 100px;
+}
+
+.header-title{
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+.header-address{
+  text-align: center;
+  width:100%;
+  word-wrap:break-word;
+  border-bottom: 3px solid;
+    padding-bottom: 5px;
+    font: small-caption;
+}
+.outer{
+  
+  margin: 5px;
+  border: 1px solid;
+  border-color: black;
+  border-radius: 0px;
+  background: #fff;
+  width: 466px;
+}
+.flex-div{
+  display:flex;
+  width:100%;  
+  background: #fff;
+}
+.row-first{
+  width: 108px;
+  padding: 10px;
+}
+.row-second{
+  width: 400px;
+  padding: 10px;
+}
+.sign{
+  text-align: right;
+height: 21px;
+}
+.principal{
+  text-align: right;
+  font-variant-caps: all-petite-caps;
+}
+.tb{
+  width: 100%;
+}

@@ -1,0 +1,5 @@
+<div [class.isPrinting]="printService.isPrinting" style="height:100%;">
+  <ng2-slim-loading-bar color="orange"></ng2-slim-loading-bar>
+  <router-outlet></router-outlet>
+  <router-outlet name="print"></router-outlet>
+</div>

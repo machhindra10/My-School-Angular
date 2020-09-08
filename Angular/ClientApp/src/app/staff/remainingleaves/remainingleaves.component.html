@@ -1,0 +1,10 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    <mat-card-title>Remaining Leaves</mat-card-title>
+  </div>  
+  <app-staff-leavessummary [staffid]="staffid" [showTitle]="false" class="div-app-classteacher"></app-staff-leavessummary>
+  <div mat-dialog-actions align="end">
+    <!--<button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>-->
+    <button type="submit" mat-raised-button color="primary">Ok</button>
+  </div>
+</form>

@@ -1,0 +1,28 @@
+.span-green {
+  font-style: italic;
+  color: green;
+}
+
+.span-red {
+  font-style: italic;
+  color: red;
+}
+
+.span-black {
+  font-style: italic;
+  color: black;
+}
+.span-more {
+  cursor: pointer;
+  color: blue;
+}
+span .mat-menu-content {
+  padding: 8px !important;
+}
+
+.reason {
+  padding: 8px;
+  background-color: cadetblue;
+  color: white;
+  font-size: 14px;
+}

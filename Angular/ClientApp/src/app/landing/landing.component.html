@@ -1,0 +1,16 @@
+<form class="form-signin" #loginForm="ngForm" [style.fontSize.px]="14">
+  <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="20%"></div>
+    <div fxFlex="60%">
+      <mat-card class="example-card mat-elevation-z1">
+        <div class="example-loading-shade" *ngIf="isLoading">
+          <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+        </div>
+        <mat-card-content align="center">
+          Redirecting... Please wait...
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="20%"></div>
+  </div>
+</form>

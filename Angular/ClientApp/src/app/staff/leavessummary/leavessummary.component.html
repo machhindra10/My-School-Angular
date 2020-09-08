@@ -1,0 +1,24 @@
+<div [@simpleFadeAnimation]="'in'" class="fontsize">
+  <mat-card class="mat-card-for-table">
+    <div class="example-loading-shade" *ngIf="isLoading1">
+      <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header mat-card-header-for-table" *ngIf="showTitle">
+      <mat-card-title>Leaves Summary</mat-card-title>
+      <span class="spacer"></span>
+    </div>
+    <table mat-table [dataSource]="leavesreamining" style="width:100%;">
+      <!-- Column -->
+      <ng-container matColumnDef="leavetype">
+        <th mat-header-cell *matHeaderCellDef> Leave Type </th>
+        <td mat-cell *matCellDef="let element">{{ element.code }} - {{ element.leavetype }} </td>
+      </ng-container>
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef> Rem. Leaves </th>
+        <td mat-cell *matCellDef="let element"> {{element.count }} / {{element.total }}  </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

@@ -1,0 +1,59 @@
+
+
+.col-right-100 {
+  text-align: right;
+  width: 100px;
+  padding-right: 20px;
+}
+
+
+.div-right-100 {
+  text-align: right;
+  width: 100px;  
+}
+
+.invoice {
+  page-break-after: always;
+}
+
+  .invoice:last-child {
+    page-break-after: avoid;
+  }
+
+.div-top-flex {
+  /*display:flex;*/
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.full {
+  width: 100%;
+  padding: 15px;
+  background-color: white;
+}
+
+/* Small table */
+/deep/ tr.mat-footer-row, tr.mat-row {
+  height: 35px !important;
+}
+
+
+
+/deep/ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type {
+  padding-right: 15px !important;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+
+.headings {
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 20px;
+  padding-bottom: 0;
+  background: #fff;
+  text-transform: uppercase;
+}

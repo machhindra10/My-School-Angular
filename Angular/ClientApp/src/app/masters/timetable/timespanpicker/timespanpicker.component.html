@@ -1,0 +1,29 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    Time Period
+  </div>
+  <div mat-dialog-content class="schedule">
+    <div style="display:flex">
+      <mat-form-field appearance="outline"  floatLabel="always">
+        <mat-label>From</mat-label>
+        <mat-select placeholder="Select" name="fromtime" [(ngModel)]="data.fromtime" (selectionChange)="FillTo()" datetime="hh:mm tt" required>
+          <mat-option *ngFor="let tp of timespans" [value]="tp">
+            {{toTime(tp) | date : 'hh:mm a'}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>To</mat-label>
+        <mat-select placeholder="Select" name="totime" [(ngModel)]="data.totime" datetime="hh:mm tt" required>
+          <mat-option *ngFor="let tp of timespansTo" [value]="tp">
+            {{toTime(tp) | date : 'hh:mm a'}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

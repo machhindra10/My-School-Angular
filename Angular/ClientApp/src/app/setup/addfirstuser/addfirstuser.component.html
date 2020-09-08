@@ -1,0 +1,101 @@
+<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+  <div fxFlex="20%"></div>
+  <div fxFlex="60%">
+    <div [@simpleFadeAnimation]="'in'">
+      <mat-card class="card" *ngIf="createuser">
+        <div class="example-loading-shade" *ngIf="isLoading">
+          <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header">
+          <mat-card-title>Create User</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <form class="form-signin" #userForm="ngForm" (ngSubmit)="SaveUser(userForm)" [style.fontSize.px]="14">
+          <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+              <div fxFlex="33%">
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input type="text" matInput name="fname" [(ngModel)]="user.fname" maxlength="20" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="33%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Middle Name</mat-label>
+                  <input type="text" matInput name="mname" [(ngModel)]="user.mname" maxlength="20" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="33%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input type="text" matInput name="lname" [(ngModel)]="user.lname" maxlength="20" required>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+              <div fxFlex="33%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input type="text" matInput email name="email" [(ngModel)]="user.email" maxlength="50" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="33%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Aadhar Number</mat-label>
+                  <input type="number" matInput name="aadharno" [(ngModel)]="user.aadharno" maxlength="12" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="33%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Role</mat-label>
+                  <mat-select disabled name="roleid" [(ngModel)]="user.roleId" required>
+                    <mat-option *ngFor="let r of userroles" [value]="r.id">
+                      {{r.rolename}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+              <div fxFlex="33%">
+                <mat-form-field appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input type="password" matInput name="password" [(ngModel)]="user.password" maxlength="15" required>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="33%">
+
+              </div>
+
+            </div>
+          </div>
+          <div align="end">
+            <button mat-raised-button color="primary">Save</button>
+          </div>
+
+        </form>
+      </mat-card>
+      <mat-card class="card" *ngIf="notready">
+        <div class="mat-card-header">
+          <mat-card-title>Status</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          Please be patient while your app is ready.<br />
+        </div>
+      </mat-card>
+      <mat-card class="card" *ngIf="invalid">
+        <div class="mat-card-header">
+          <mat-card-title>Invalid</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          Invalid Response.<br />
+        </div>
+      </mat-card>
+    </div>
+  </div><div fxFlex="20%"></div>
+</div>

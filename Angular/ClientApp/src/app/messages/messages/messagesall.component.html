@@ -1,0 +1,42 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <mat-card class="mat-card-for-table">
+    <div class="example-loading-shade" *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>Messages</mat-card-title>
+      <span class="spacer"></span>
+      <button type="button" mat-button color="primary" (click)="openSettingsDialog()" matTooltip="Send New">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+    <table mat-table [dataSource]="messages" class="table-largerow" style="width:100%;">
+      <!-- Column -->
+      <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef> Message Text </th>
+        <td mat-cell *matCellDef="let element" (click)="details(element.id)" class="cur-pointer"> {{element.message}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Date </th>
+        <td mat-cell *matCellDef="let element" (click)="details(element.id)" class="cur-pointer">
+          {{element.datecreated | date : 'dd/MM/yyyy'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="totalrecepients">
+        <th mat-header-cell *matHeaderCellDef style="width:80px;"> Recepients </th>
+        <td mat-cell *matCellDef="let element" (click)="details(element.id)" class="cur-pointer"
+          style="text-align: center;"> {{element.countRecepients}} </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="primary" (click)="Delete(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

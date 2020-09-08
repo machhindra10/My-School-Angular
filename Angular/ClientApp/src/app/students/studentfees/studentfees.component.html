@@ -1,0 +1,55 @@
+<div [@simpleFadeAnimation]="'in'">
+
+  <mat-card class="mat-card-for-table">
+    <div class="example-loading-shade" *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>Fees Details</mat-card-title>
+      <span class="spacer"></span>
+      <button type="button" mat-button color="primary" matTooltip="Add" (click)="openDialog()">
+        <mat-icon class="add-icon">add_circle</mat-icon>
+      </button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu" matTooltip="more">
+        <mat-icon>more_vertical</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="UpdateFromClassFeesTemplete()">
+          <mat-icon>autorenew</mat-icon>
+          <span>Update from class fees templete</span>
+        </button>
+      </mat-menu>
+    </div>
+    <mat-card-content>
+      <table mat-table [dataSource]="studentfees1" style="width:100%;">
+        <!-- Column -->
+        <ng-container matColumnDef="feestype">
+          <th mat-header-cell *matHeaderCellDef> Fees Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.feesType }} </td>
+          <td mat-footer-cell *matFooterCellDef> Total </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef style="width:100px; text-align: right; padding-right: 0px;"> Amount
+            ({{currencycode | currencySymbol}})</th>
+          <td mat-cell *matCellDef="let element" class="col-right-70"> {{element.amount | currency : ' '}} </td>
+          <td mat-footer-cell *matFooterCellDef class="col-right-70">
+            {{currencycode | currencySymbol}}
+            {{getTotalCost() | currency: ' '}} </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef class="center-50">Delete</th>
+          <td mat-cell *matCellDef="let element" class="center-60">
+            <button type="button" mat-button color="primary" (click)="Delete(element.id)">
+              <mat-icon class="mat-button-sm">delete</mat-icon>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1;" color="primary"
+          [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns1"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

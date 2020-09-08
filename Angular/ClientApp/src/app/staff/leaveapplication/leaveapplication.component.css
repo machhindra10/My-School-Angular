@@ -1,0 +1,42 @@
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+.span-green{
+ font-style:italic;
+  color:green;
+}
+.span-red {
+  font-style: italic;
+  color: red;
+}
+.span-black {
+  font-style: italic;
+  color: black;
+}
+
+
+span span.only-show-on-hover {
+  visibility: hidden;
+  position:relative;
+}
+
+span:hover span.only-show-on-hover {
+  visibility: visible;
+}
+span .mat-menu-content {
+  padding: 8px !important;
+}
+.reason {
+  padding: 8px;
+  background-color: cadetblue;
+  color:white;
+  font-size:14px;
+}
+.span-more{
+  cursor:pointer;
+  color:blue;
+}
+.div-reason{
+  font-size:14px;
+  font-style: italic;
+}

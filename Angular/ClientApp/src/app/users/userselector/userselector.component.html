@@ -1,0 +1,30 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    Users
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>User</mat-label>
+      <mat-select name="users" [(ngModel)]="userids" required [multiple]="data.selectMany">
+        <mat-select-trigger *ngIf="userids?.length > 1">
+          <span *ngIf="userids?.length == 0" class="example-additional-selection">
+            {{''}}
+          </span>
+          <span *ngIf="userids?.length == 1" class="example-additional-selection">
+            {{userids ? getUserName(userids[0]) : ''}}
+          </span>
+          <span *ngIf="userids?.length > 1" class="example-additional-selection">
+            ({{userids.length}} {{'Users'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let s of users" [value]="s.id">
+          {{s.fname}} {{s.mname}} {{s.lname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

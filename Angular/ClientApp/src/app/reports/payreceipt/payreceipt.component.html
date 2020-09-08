@@ -1,0 +1,76 @@
+<div [@simpleFadeAnimation]="'in'" *ngIf="!takeprint">
+  <mat-card>
+    <div class="example-loading-shade" *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header">
+      <button mat-button color="primary" matTooltip="Back" (click)="Back()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-card-title>Payment Receipt</mat-card-title>
+      <span class="spacer"></span>
+      <button mat-button color="primary" (click)="printDocument()" matTooltip="Print">
+        <mat-icon>print</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+</div>
+<div class="invoice div-second">
+  <div class="headings" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="100%">
+      Payment Receipt
+    </div>
+  </div>
+  <table class="full">
+    <tr>
+      <td style="width:115px;">Receipt No. :</td>
+      <td>{{receiptno}}</td>
+      <td style="width:auto"></td>
+      <td style="width:44px;">Date :</td>
+      <td style="width:82px;">{{rdate | date:'dd/MM/yyyy'}}</td>
+    </tr>
+    <tr>
+      <td>PRN No. :</td>
+      <td>{{ prnno }}</td>
+    </tr>
+    <tr>
+      <td>Student Name :</td>
+      <td>
+        {{ sname }}
+      </td>
+    </tr>
+    <tr>
+      <td>Address. :</td>
+      <td>{{ address }}</td>
+    </tr>
+  </table>
+
+  <table mat-table [dataSource]="invoiceDetails" style="width:100%; ">
+    <!-- Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element" style="max-width:50px;"> {{element.description }} </td>
+    </ng-container>
+    <ng-container matColumnDef="mode">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.datecreated | date:'dd/MM/yyyy' }} </td>
+    </ng-container>
+    <ng-container matColumnDef="chtrno">
+      <th mat-header-cell *matHeaderCellDef> Ch/Tr No </th>
+      <td mat-cell *matCellDef="let element"> {{element.chtrno }} </td>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef class="col-right-70" style="width:100px;">
+        Amount
+        ({{currencycode | currencySymbol}})
+      </th>
+      <td mat-cell *matCellDef="let element" class="col-right-70">
+        {{currencycode | currencySymbol}}
+        {{element.amount | currency: ' ' }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns1;" color="primary"
+        [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
+  </table>
+</div>

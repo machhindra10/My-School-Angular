@@ -1,0 +1,45 @@
+<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+  <!--<div fxFlex="20%"></div>-->
+  <div fxFlex="100%">
+    <div [@simpleFadeAnimation]="'in'">
+     
+        <div class="example-loading-shade" *ngIf="isLoading">
+          <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header">
+          <mat-card-title>Create Batch</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <form class="form-signin" #batchForm="ngForm" (ngSubmit)="SaveBatch(batchForm)" [style.fontSize.px]="14">
+          <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+            <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+              <div fxFlex="50%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>Batch Name</mat-label>
+                  <input type="text" matInput name="fname" [(ngModel)]="batch.batch" maxlength="20" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="50%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>Start Date</mat-label>
+                  <input [min]="minDate" matInput readonly [matDatepicker]="picker" name="startdate" [(ngModel)]="batch.startdate" datetime="dd/MM/yyyy" required>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <!--<div fxFlex="25%">
+              </div>
+              <div fxFlex="25%"></div>-->
+            </div>
+          </div>
+          <div align="end">
+            <button mat-raised-button color="primary">Save</button>
+          </div>
+        </form>
+
+     
+    </div>
+  </div>
+  <!--<div fxFlex="20%"></div>-->
+</div>

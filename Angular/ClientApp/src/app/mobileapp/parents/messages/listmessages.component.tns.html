@@ -1,0 +1,30 @@
+<ActionBar title="Messages {{getUnreadCount()}}">
+  <ActionItem (tap)="onRefresh()" android.systemIcon="ic_menu_refresh" android.position="actionBar">
+  </ActionItem>
+</ActionBar>
+<StatusBar android:barStyle="#00A7DC" barColor="#00A7DC"></StatusBar>
+<FlexboxLayout class="page">
+  <StackLayout class="form">
+    <GridLayout rows="auto, auto, auto">
+      <StackLayout row="0">
+
+        <ListView *ngIf="messages.length > 0" height="500" [items]="messages" (itemTap)="onItemTap($event)">
+
+          <ScrollView>
+            <ng-template let-m="item" let-i="index">
+              <StackLayout orientation="vertical" class="list-group-item">
+                <Label class="name" [class.name-bold]="m.read == null" [text]="m.message.message"></Label>
+                <Label class="details" [text]="m.message.datecreated | date : 'dd/MM/yyyy hh:mm:ss aa'"></Label>
+
+              </StackLayout>
+            </ng-template>
+          </ScrollView>
+
+        </ListView>
+
+      </StackLayout>
+      <ActivityIndicator row="1" [busy]="processing" class="indicator"></ActivityIndicator>
+
+    </GridLayout>
+  </StackLayout>
+</FlexboxLayout>

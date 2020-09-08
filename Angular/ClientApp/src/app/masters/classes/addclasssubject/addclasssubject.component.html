@@ -1,0 +1,30 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    Class Subjects
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Subject</mat-label>
+      <mat-select name="subjectid1" [(ngModel)]="subjectids" required [multiple]="data.selectMany">
+        <mat-select-trigger *ngIf="subjectids?.length > 1" >
+          <span *ngIf="subjectids?.length == 0" class="example-additional-selection">
+            {{''}}
+          </span>
+          <span *ngIf="subjectids?.length == 1" class="example-additional-selection">
+            {{subjectids ? getSubjectName(subjectids[0]) : ''}}
+          </span>
+          <span *ngIf="subjectids?.length > 1" class="example-additional-selection">
+            ({{subjectids.length}} {{'Subjects'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let s of subjects1" [value]="s.id">
+          {{s.code}} - {{s.subject}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

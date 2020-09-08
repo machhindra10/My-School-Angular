@@ -1,0 +1,15 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    <mat-card-title>Reject Reason</mat-card-title>
+  </div>
+  <div mat-dialog-content class="reason">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Reason</mat-label>
+      <input type="text" matInput name="reason" [(ngModel)]="reason" maxlength="500" required cdkFocusInitial>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

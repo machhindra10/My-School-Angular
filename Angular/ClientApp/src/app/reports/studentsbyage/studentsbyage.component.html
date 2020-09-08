@@ -1,0 +1,133 @@
+<div [@simpleFadeAnimation]="'in'" *ngIf="!takeprint" class="fontsize">
+  <mat-card>
+    <div class="example-loading-shade" *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header">
+      <mat-card-title>Students By Age</mat-card-title>
+      <span class="spacer"></span>
+      <button *ngIf="classid != null && fromYear > 0 && toYear > 0 && students.length > 0" mat-button color="primary"
+              (click)="printDocument()" matTooltip="Print">
+        <mat-icon>print</mat-icon>
+      </button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showHeader">Show Header</mat-checkbox>
+        </button>
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showFooter">Show Footer</mat-checkbox>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="div-p5" fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+         fxLayoutWrap fxLayoutAlign="start">
+      <div fxFlex="24%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Classes</mat-label>
+          <mat-select placeholder="Select" name="classid" [(ngModel)]="classid" (selectionChange)="load()" required>
+            <mat-option [value]="0">All</mat-option>
+            <mat-option *ngFor="let c of classes" [value]="c.id">
+              {{c.standard}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="15%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>From</mat-label>
+          <mat-select [(ngModel)]="fromYear" (selectionChange)="getToAge()" required>
+            <mat-option *ngFor="let a of fromAge" [value]="a.iyear">{{a.year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="15%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>To</mat-label>
+          <mat-select [(ngModel)]="toYear" (selectionChange)="load()" required>
+            <mat-option *ngFor="let a of toAge" [value]="a.iyear">{{a.year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Batch</mat-label>
+          <mat-select placeholder="Select" [(ngModel)]="batchid" (selectionChange)="load()" required>
+            <mat-option *ngFor="let b of batches" [value]="b.id">{{b.batch}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </mat-card>
+</div>
+<div class="invoice div-second" *ngIf="students.length > 0">
+  <div class="headings" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="100%">
+      Students By Age
+    </div>
+  </div>
+  <div class="subheader-row" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="10%" class="title">
+      Class :
+    </div>
+    <div fxFlex="15%">
+      {{getClassName()}}
+    </div>
+    <div fxFlex="7%" class="title">
+      Age :
+    </div>
+    <div fxFlex="10%">
+      {{fromYear}} - {{toYear}}
+    </div>
+    <div fxFlex="10%" class="title">
+      Batch :
+    </div>
+    <div fxFlex="15%">
+      {{getBatchName()}}
+    </div>
+  </div>
+  <table mat-table [dataSource]="students" style="width:100%">
+    <ng-container matColumnDef="srno">
+      <th mat-header-cell *matHeaderCellDef style="width:80px; text-align:left !important;">Sr. No. </th>
+      <td mat-cell *matCellDef="let element; let i = index" style="width:80px; text-align:left !important;">
+        {{i+1}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.fname}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="prnno">
+      <th mat-header-cell *matHeaderCellDef style="width:150px; text-align:left !important;"> PRN No.</th>
+      <td mat-cell *matCellDef="let element" style="width:150px; text-align:left !important;">
+        {{element.prnno}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef> Age</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.age}}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<div *ngIf="!takeprint && students.length == 0" class="div-second">
+  <mat-card>
+    <div class="mat-card-header">
+      <mat-card-title>Alert</mat-card-title>
+      <span class="spacer"></span>
+    </div>
+    <ul class="default-message">
+      <li>Data not found!</li>
+      <br />
+    </ul>
+  </mat-card>
+</div>
+

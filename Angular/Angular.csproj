@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClientApp\hooks\**" />
+    <Compile Remove="ClientApp\node_modules\**" />
+    <Compile Remove="ClientApp\platforms\**" />
+    <Compile Remove="ClientApp\plugins\**" />
+    <Compile Remove="ClientApp\src\app\masters\timetable\timetable1\**" />
+    <EmbeddedResource Remove="ClientApp\hooks\**" />
+    <EmbeddedResource Remove="ClientApp\node_modules\**" />
+    <EmbeddedResource Remove="ClientApp\platforms\**" />
+    <EmbeddedResource Remove="ClientApp\plugins\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\masters\timetable\timetable1\**" />
+    <None Remove="ClientApp\hooks\**" />
+    <None Remove="ClientApp\node_modules\**" />
+    <None Remove="ClientApp\platforms\**" />
+    <None Remove="ClientApp\plugins\**" />
+    <None Remove="ClientApp\src\app\masters\timetable\timetable1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\parents\dashboard\" />
+  </ItemGroup>
+
+</Project>

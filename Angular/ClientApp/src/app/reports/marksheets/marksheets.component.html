@@ -1,0 +1,224 @@
+<div [@simpleFadeAnimation]="'in'" *ngIf="!takeprint" class="fontsize">
+  <mat-card>
+    <div class="example-loading-shade" *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header">
+      <mat-card-title>Students Marksheet</mat-card-title>
+      <span class="spacer"></span>
+      <button
+        *ngIf="classid != null && batchid != null && examid != null && studentMarksheets.length > 0 && studentids?.length > 0"
+        mat-button color="primary" (click)="printDocument()" matTooltip="Print">
+        <mat-icon>print</mat-icon>
+      </button>
+      <button *ngIf="classid != null && batchid != null && examid != null && studentids?.length > 0" mat-button
+        color="primary" (click)="generateMarksheet()" matTooltip="Generate Marksheet">
+        <mat-icon>featured_play_list</mat-icon>
+      </button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu" matTooltip="Report Settings">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showHeader">Show Header</mat-checkbox>
+        </button>
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showFooter">Show Footer</mat-checkbox>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="div-p5" fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'"
+      [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px" fxLayoutWrap fxLayoutAlign="start">
+      <div fxFlex="20%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Classes</mat-label>
+          <mat-select placeholder="Select" name="classid" [(ngModel)]="classid" (selectionChange)="getOthers()"
+            required>
+            <!--<mat-option [value]="0">All</mat-option>-->
+            <mat-option *ngFor="let c of classes" [value]="c.id">
+              {{c.standard}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Examinations</mat-label>
+          <mat-select [(ngModel)]="examid" (selectionChange)="reset()" required>
+            <mat-option *ngFor="let e of exams" [value]="e.id">{{e.examName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Students</mat-label>
+          <mat-select [(ngModel)]="studentids" required multiple>
+            <mat-select-trigger>
+              {{studentids ? getStudentName(studentids[0]) : ''}}
+              <span *ngIf="studentids?.length > 1" class="example-additional-selection">
+                (+{{studentids.length - 1}} {{studentids?.length === 2 ? 'student' : 'students'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let s of students" [value]="s.id">{{s.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Batch</mat-label>
+          <mat-select placeholder="Select" [(ngModel)]="batchid" (selectionChange)="load()" required>
+            <mat-option *ngFor="let b of batches" [value]="b.id">{{b.batch}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </mat-card>
+</div>
+<div *ngIf="studentMarksheets.length > 0" style="width:100%; min-width:660px;">
+  <div class="invoice div-second" *ngFor="let student of studentMarksheets">
+    <div class="headings" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+      <div fxFlex="100%">
+        Marksheet
+      </div>
+    </div>
+    <div class="subheader-row-photo" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="end">
+      <div fxFlex="100%" fxLayoutAlign="end">
+        <!--<mat-card class="example-card mat-card2">-->
+        <img [src]="student.photo" width="80" height="80" />
+        <!--</mat-card>-->
+      </div>
+    </div>
+    <div class="subheader-row" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+      <div fxFlex="20%" class="title">
+        Roll No. :
+      </div>
+      <div fxFlex="40%">
+        {{student.tStudentAdmission[0].rollno}}
+      </div>
+      <span class="spacer"></span>
+      <div fxFlex="10%" class="title">
+
+      </div>
+      <div fxFlex="15%">
+
+      </div>
+    </div>
+    <div class="subheader-row" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+      <div fxFlex="20%" class="title">
+        PRN No. :
+      </div>
+      <div fxFlex="40%">
+        {{student.prnno}}
+      </div>
+      <span class="spacer"></span>
+      <div fxFlex="10%" class="title">
+        Batch :
+      </div>
+      <div fxFlex="15%">
+        {{getBatchName()}}
+      </div>
+    </div>
+    <div class="subheader-row" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+      <div fxFlex="20%" class="title">
+        Student's Name :
+      </div>
+      <div fxFlex="40%">
+        {{student.fname}}
+      </div>
+      <span class="spacer"></span>
+      <div fxFlex="10%" class="title">
+        Class :
+      </div>
+      <div fxFlex="15%">
+        {{student.tExamMarkSheet[0].class.standard}}
+      </div>
+    </div>
+    <div class="subheader-row" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+      <div fxFlex="20%" class="title">
+        Gaurdian's Name :
+      </div>
+      <div fxFlex="40%">
+        {{student.guardian.name}}
+      </div>
+      <span class="spacer"></span>
+      <div fxFlex="10%" class="title">
+        Exam :
+      </div>
+      <div fxFlex="15%">
+        {{student.tExamMarkSheet[0].exam.examName}}
+      </div>
+    </div>
+    <table mat-table [dataSource]="student.tExamMarkSheet" style="width:100%; padding-top:10px;">
+      <ng-container matColumnDef="srno">
+        <th mat-header-cell *matHeaderCellDef style="width:50px; text-align:left !important;">Sr. No. </th>
+        <td mat-cell *matCellDef="let element; let i = index" style="width:50px; text-align:left !important;">
+          {{i+1}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef style="text-align:center !important;">Code</th>
+        <td mat-cell *matCellDef="let element" style="text-align:center !important;">
+          {{element.subject.code}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="subject">
+        <th mat-header-cell *matHeaderCellDef style="padding-left:10px;">Subject</th>
+        <td mat-cell *matCellDef="let element" style="padding-left:10px;">
+          {{element.subject.subject}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef style="padding-left:10px;">Total</td>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef style="width:100px; text-align:center !important;"> Total</th>
+        <td mat-cell *matCellDef="let element" style="width:100px; text-align:center !important;">
+          {{element.exmsch.totalmarks}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef style="width:100px; text-align:center !important;">
+          {{getTotalMarks(student.tExamMarkSheet)}}</td>
+
+      </ng-container>
+      <ng-container matColumnDef="obtained">
+        <th mat-header-cell *matHeaderCellDef style="width:100px; text-align:center !important;"> Theory</th>
+        <td mat-cell *matCellDef="let element" style="width:100px; text-align:center !important;">
+          {{element.obtained}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef style="width:100px; text-align:center !important;">
+          {{getTotalTheory(student.tExamMarkSheet)}}</td>
+      </ng-container>
+      <ng-container matColumnDef="practical">
+        <th mat-header-cell *matHeaderCellDef style="width:100px; text-align:center !important;"> Practical</th>
+        <td mat-cell *matCellDef="let element" style="width:100px; text-align:center !important;">
+          {{element.practical}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef style="width:100px; text-align:center !important;">
+          {{getTotalPractical(student.tExamMarkSheet)}}</td>
+      </ng-container>
+      <ng-container matColumnDef="totalobtained">
+        <th mat-header-cell *matHeaderCellDef style="width:100px; text-align:center !important;"> Total Obtained</th>
+        <td mat-cell *matCellDef="let element" style="width:100px; text-align:center !important;">
+          {{element.totalmarks}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef style="width:100px; text-align:center !important;">
+          {{getTotalObtained(student.tExamMarkSheet)}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+  </div>
+</div>
+<div *ngIf="!takeprint && studentMarksheets.length == 0" class="div-second">
+  <mat-card>
+    <div class="mat-card-header">
+      <mat-card-title>Alert</mat-card-title>
+      <span class="spacer"></span>
+    </div>
+    <ul class="default-message">
+      <li>Data not found!</li>
+      <br />
+    </ul>
+  </mat-card>
+</div>

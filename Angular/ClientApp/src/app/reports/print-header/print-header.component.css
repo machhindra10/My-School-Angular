@@ -1,0 +1,21 @@
+.logo {
+  position: sticky;
+  top: 0;
+  height: 64px;
+  color: white;
+  z-index: 2;
+  align-content:flex-start;
+  width: 249px;
+}
+.div-flex{
+  display:flex;
+  width:100%;  
+}
+.header-title{
+  font-size: 24px;
+  
+}
+.header-address{
+  width:100%;
+  word-wrap:break-word;
+}

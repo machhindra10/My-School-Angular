@@ -1,0 +1,10 @@
+<app-main-nav>
+  <div class="inner">
+    <div class="example-loading-shade"
+         *ngIf="showLoader">
+      <mat-spinner *ngIf="showLoader" class="spinner"></mat-spinner>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+
+</app-main-nav>

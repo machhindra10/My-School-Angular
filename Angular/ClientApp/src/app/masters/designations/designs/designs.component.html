@@ -1,0 +1,51 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <mat-card class="mat-card-for-table">
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>Designations</mat-card-title>
+      <span class="spacer"></span>
+      <button mat-button color="primary" matTooltip="Add New" (click)="Add(0)">
+        <mat-icon class="add-icon">add_circle</mat-icon>
+      </button>
+    </div>
+    <table mat-table [dataSource]="designations1" style="width:100%;">
+      <!-- Column -->
+      <ng-container matColumnDef="designname">
+        <th mat-header-cell *matHeaderCellDef> Designation </th>
+        <td mat-cell *matCellDef="let element"> {{element.designname }} </td>
+      </ng-container>
+      <!-- Position Column -->
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;" class="showhide"> Edit</th>
+        <td mat-cell *matCellDef="let element" class="showhide">
+          <button [disabled]="element.isdefault" mat-button color="primary"
+            (click)="((element.isdefault) ? '' : Add(element.id))">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+        <td mat-cell *matCellDef="let element">
+          <button [disabled]="element.isdefault" mat-button color="primary"
+            (click)="((element.isdefault) ? '' : Delete(element.id))">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="enabled">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Blocked</th>
+        <td mat-cell *matCellDef="let element" class="slide-center">
+          <mat-slide-toggle [disabled]="element.isdefault" class="example-margin"
+            (change)="((element.isdefault) ? '' : Update(element))" color="primary" [checked]="element.disabled">
+          </mat-slide-toggle>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

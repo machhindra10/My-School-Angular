@@ -1,0 +1,34 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    Add Leaves
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" floatLabel="always" class="spacing">
+      <mat-label>Leave Types</mat-label>
+      <mat-select name="leavetype" [(ngModel)]="leavetypeids" required [multiple]="data.selectMany">
+        <mat-select-trigger *ngIf="leavetypeids?.length > 1">
+          <span *ngIf="leavetypeids?.length == 0" class="example-additional-selection">
+            {{''}}
+          </span>
+          <span *ngIf="leavetypeids?.length == 1" class="example-additional-selection">
+            {{leavetypeids ? getLeaveTypeName(leavetypeids[0]) : ''}}
+          </span>
+          <span *ngIf="leavetypeids?.length > 1" class="example-additional-selection">
+            ({{leavetypeids.length}} {{'Leave Types'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let s of leavetypes" [value]="s.id">
+          {{s.code}} - {{s.leavetype}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="spacing">
+      <mat-label>Leaves</mat-label>
+      <input type="number" matInput name="leaves" [(ngModel)]="leaves" maxlength="2" pattern="^\d*(\.\d{0,2})?$" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

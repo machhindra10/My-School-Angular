@@ -1,0 +1,79 @@
+
+.mat-card-header {
+  display: block;
+}
+
+.mid-div {
+  font-size: 15px;
+}
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0px !important; 
+}
+
+.form-signin
+{margin:15px;}
+.example-card {
+  border-radius: 4px !important;
+  padding: 40px !important;
+  padding-bottom: 30px !important;
+}
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+  .example-container > * {
+    width: 100%;
+  }
+.div-login {
+  display: inline-flex;
+  width: 100%;
+  height: auto;
+}
+.inner1 {
+  margin: auto;
+  width: 450px;
+  height: auto;
+  position: relative;
+}
+.mat-card-actions {
+   margin-left: 0px; 
+   margin-right: 0px; 
+   padding: 0px 0; 
+}
+.mat-card > .mat-card-actions:last-child {
+   margin-bottom: 0px; 
+  padding-bottom: 0;
+}
+.mat-card-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+.alert-danger{
+  color:red;
+}
+
+
+.spinner {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/deep/.mat-progress-spinner svg {
+  width: 40px !important;
+  height: 40px !important;
+}
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  z-index: 105;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: rgba(0,0,0,0.12);
+}

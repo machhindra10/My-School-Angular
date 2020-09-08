@@ -1,0 +1,24 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    <mat-card-title *ngIf="data.guardianid == 0 || data.guardianid == null">Add Guardian</mat-card-title>
+    <mat-card-title *ngIf="data.guardianid > 0">Edit Guardian</mat-card-title>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" floatLabel="always" class="spacing">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput name="name" [(ngModel)]="guardian.name" maxlength="500" required cdkFocusInitial>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="spacing">
+      <mat-label>Mobile</mat-label>
+      <input type="number" matInput name="mobile" [(ngModel)]="guardian.mobile" maxlength="15" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="spacing">
+      <mat-label>Address</mat-label>
+      <textarea matInput name="address" [(ngModel)]="guardian.address" maxlength="500" required></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">{{ data.guardianid > 0 ? 'Update' : 'Add'}}</button>
+  </div>
+</form>

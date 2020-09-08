@@ -1,0 +1,43 @@
+.page {
+  align-items:flex-start;
+  flex-direction: column;
+}
+
+.form {
+  margin: 10px;  
+  flex-grow: 2;
+  vertical-align: top;
+  
+}
+.card-style {
+  background-color: white;  
+  width: 96%;
+  margin: 15px;  
+}
+
+.btn-primary {
+  margin: 30 5 15 5;
+}
+.list-group-item{  
+  padding: 30px;  
+}
+.name{
+  font-size: 16px;
+padding-bottom: 5px;
+}
+.name-bold{  
+font-weight: 600;
+}
+.details{
+  font-size: 11px;
+  text-align:right;
+  margin-top: 10px;
+}
+
+.title{
+  color: white;
+  background: cornflowerblue;
+}
+.indicator{
+  margin-top: 10px;
+}

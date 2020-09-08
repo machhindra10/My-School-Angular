@@ -1,0 +1,24 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade"
+       *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+    <mat-card>
+      <div class="mat-card-header">
+        <button type="button" mat-button color="primary" matTooltip="Back" (click)="Back()"><mat-icon>arrow_back</mat-icon></button>
+        <mat-card-title>Designation</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Save"><mat-icon>save</mat-icon></button>
+      </div>
+      <div class="div-p5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+        <div fxFlex="25%">
+          <mat-form-field appearance="outline">
+            <mat-label>Designation</mat-label>
+            <input type="text" matInput name="designname" [(ngModel)]="designation.designname" maxlength="50" required>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>

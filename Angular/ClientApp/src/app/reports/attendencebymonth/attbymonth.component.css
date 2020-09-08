@@ -1,0 +1,52 @@
+.invoice {
+  page-break-after: always;
+}
+
+  .invoice:last-child {
+    page-break-after: avoid;
+  }
+.fontsize{
+  font-size:14px;  
+}
+
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+
+/* Small table */
+/deep/ tr.mat-footer-row, tr.mat-row {
+  height: 35px !important;
+}
+
+/deep/ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type {
+  padding-right: 15px !important;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 20px;
+}
+.colwidth{
+  width:20px;
+}
+.headings {
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 20px;
+  /*padding-bottom: 0;*/
+  background: #fff;
+  text-transform: uppercase;
+}
+.subheader-row {
+  padding: 20px;
+  background: #fff;
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+.title {
+  font-weight: 600;
+}

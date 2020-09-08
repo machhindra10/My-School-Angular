@@ -1,0 +1,57 @@
+/deep/ .mat-form-field {
+  width: 100% !important;
+}
+
+/deep/ .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+
+.inner1 {
+  margin: auto;
+  width: 450px;
+  height: auto;
+  position: relative;
+}
+.mat-card-actions {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0px 0;
+  margin-bottom: 5px;
+  padding-top: 5px;
+}
+.mat-card > .mat-card-actions:last-child {
+   margin-bottom: 0px; 
+  padding-bottom: 0;
+}
+.mat-card-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+.alert-danger{
+  color:red;
+}
+
+
+/deep/.mat-card{
+  font-family: 'Lato', sans-serif !important;
+}
+
+.div-main-green {
+  margin: 10px;
+  margin-top: 30px;
+  font-size: 16px;
+  background-color: aliceblue;
+  padding: 10px;
+  margin-bottom: 10px !important;
+}
+
+.div-main {
+  margin: 10px;
+   
+  padding: 10px;
+}
+
+/deep/.mat-progress-spinner svg {
+  width: 40px !important;
+  height: 40px !important;
+}

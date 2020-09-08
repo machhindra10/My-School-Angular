@@ -1,0 +1,86 @@
+<div [@simpleFadeAnimation]="'in'">  
+  <mat-card>
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+      <div class="example-loading-shade" *ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+      </div>
+      <div class="mat-card-header">
+        <button type="button" mat-button color="primary" matTooltip="Back" (click)="Back()"><mat-icon>arrow_back</mat-icon></button>
+        <mat-card-title *ngIf="userid == 0">Create User</mat-card-title>
+        <mat-card-title *ngIf="userid > 0">Edit User <span style="font-size:14px;">({{user.email}})</span></mat-card-title>
+        <span class="spacer"></span>
+        <mat-slide-toggle *ngIf="userid > 0" [disabled]="user.isAdmin" [matTooltip]="(user.disabled) ? 'Unblock User' : 'Block User'" (change)="blockUnblock()" color="primary" [checked]="user.disabled"></mat-slide-toggle>
+        <button mat-button color="primary" matTooltip="Save"><mat-icon>save</mat-icon></button>
+      </div>
+      <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+        <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input type="text" matInput name="fname" [(ngModel)]="user.fname" maxlength="20" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Middle Name</mat-label>
+              <input type="text" matInput name="mname" [(ngModel)]="user.mname" maxlength="20" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input type="text" matInput name="lname" [(ngModel)]="user.lname" maxlength="20" required>
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Aadhar Number</mat-label>
+              <input type="text" matInput name="aadharno" [(ngModel)]="user.aadharno" maxlength="12" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline">
+              <mat-label>Role</mat-label>
+              <mat-select [disabled]="user.isAdmin" name="roleid" [(ngModel)]="user.roleId" required>
+                <mat-option *ngFor="let r of userroles" [value]="r.id">
+                  {{r.rolename}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <!--<mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input [readonly]="userid > 0" [disabled]="userid > 0" type="text" matInput email name="email" [(ngModel)]="user.email" maxlength="50" required>
+            </mat-form-field>-->
+          </div>
+        </div>
+        <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline" *ngIf="userid == 0">
+              <mat-label>Email</mat-label>
+              <input [readonly]="userid > 0" [disabled]="userid > 0" type="text" matInput email name="email" [(ngModel)]="user.email" maxlength="50" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <mat-form-field appearance="outline" *ngIf="user.id == 0">
+              <mat-label>Password</mat-label>
+              <input type="text" disabled="disabled" matInput name="password" [(ngModel)]="user.password" maxlength="15" required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="33%">
+            <!--<mat-form-field appearance="outline" style="display:none;">
+              <mat-label>User Name</mat-label>
+              <input [disabled]="userid > 0" type="text" matInput name="userName" [(ngModel)]="user.userName" maxlength="15">
+            </mat-form-field>-->
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

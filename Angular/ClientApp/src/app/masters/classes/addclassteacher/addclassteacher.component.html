@@ -1,0 +1,19 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    Class Teachers
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" floatLabel="always" >
+      <mat-label>Teacher</mat-label>
+      <mat-select name="staffid" [(ngModel)]="staffid" required cdkFocusInitial [multiple]="data.selectMany">
+        <mat-option *ngFor="let r of staff1" [value]="r.id">
+          {{r.staffname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Add</button>
+  </div>
+</form>

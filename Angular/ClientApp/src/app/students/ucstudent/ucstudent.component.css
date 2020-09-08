@@ -1,0 +1,23 @@
+
+.example-card {
+  height:auto !important;
+}
+.mat-card2 {
+  border-radius: 4px !important;
+  padding:5px !important;
+  width: 80px !important;
+  height:80px !important;
+}
+.mat-card1 {
+  border-radius: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  padding-bottom: 0px !important;
+}
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+.h-title{
+  font-weight:500;
+  color:cadetblue;
+}

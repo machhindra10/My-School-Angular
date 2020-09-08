@@ -1,0 +1,10 @@
+
+.mat-card2 {
+  border-radius: 4px !important;
+  padding: 3px !important;
+  width: 50px !important;
+  height: 50px !important;
+}
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}

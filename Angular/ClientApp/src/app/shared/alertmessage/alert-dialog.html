@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Alert</h2>
+<mat-dialog-content>
+  <span>Please note:</span><br />
+  <span>If you add a new batch/year/session, apps previous batch/year/session will end</span><br />
+  <span>New batch/year/session will be create and active</span><br />
+  <span>You cant delete or activate apps previous batch/year/session</span><br />
+  <span>But still you can view previous batch/year/session data in reports section</span><br />
+  <span>So Are you sure? you want to go ahead and create new batch/year/session?</span>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button [mat-dialog-close]="false">No</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">Yes</button>
+</mat-dialog-actions>

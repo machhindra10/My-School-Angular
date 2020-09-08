@@ -1,0 +1,52 @@
+<div [@simpleFadeAnimation]="'in'">
+  <mat-card class="mat-card-for-table">
+    <div class="example-loading-shade" *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>Users</mat-card-title>
+      <span class="spacer"></span>
+      <button mat-button color="primary" matTooltip="Add" (click)="Add(0)"><mat-icon class="add-icon">add_circle</mat-icon></button>
+    </div>
+    <table mat-table [dataSource]="users" style="width:100%;">
+      <!-- Column -->
+      <ng-container matColumnDef="fname">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.fname + ' ' + element.mname + ' ' + element.lname}} </td>
+      </ng-container>
+      <ng-container matColumnDef="rolename">
+        <th mat-header-cell *matHeaderCellDef [ngClass.lg]="sh" [ngClass.sm]="sh" ngClass.xs="hd"> Role </th>
+        <td mat-cell *matCellDef="let element" [ngClass.lg]="sh" [ngClass.sm]="sh" ngClass.xs="hd"> {{element.role.rolename}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd"> Email </th>
+        <td mat-cell *matCellDef="let element" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd"> {{element.email}} </td>
+      </ng-container>
+      <ng-container matColumnDef="aadharno">
+        <th mat-header-cell *matHeaderCellDef [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd"> Aadhar No </th>
+        <td mat-cell *matCellDef="let element" [ngClass.lg]="sh" [ngClass.sm]="hd" ngClass.xs="hd"> {{element.aadharno}} </td>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Edit</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="primary" (click)="Add(element.id)"><mat-icon>edit</mat-icon></button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+        <td mat-cell *matCellDef="let element">
+          <button [disabled]="element.isAdmin" mat-button color="primary" (click)="Delete(element.id)"><mat-icon>delete</mat-icon></button>
+
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="enabled">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Blocked</th>
+        <td mat-cell *matCellDef="let element"  class="slide-center">
+          <mat-slide-toggle [disabled]="element.isAdmin" class="example-margin" (change)="Update(element)" color="primary" [checked]="element.disabled"></mat-slide-toggle>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

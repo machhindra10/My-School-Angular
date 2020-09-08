@@ -1,0 +1,288 @@
+<div [@simpleFadeAnimation]="'in'" *ngIf="!takeprint" class="fontsize">
+  <mat-card>
+    <div class="example-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header">
+      <mat-card-title>Attendance By Month</mat-card-title>
+      <span class="spacer"></span>
+      <button *ngIf="classid > 0 && imonth > 0 && students.length > 0" mat-button color="primary" (click)="printDocument()" matTooltip="Print"><mat-icon>print</mat-icon></button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu" matTooltip="Report Settings">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showHeader">Show Header</mat-checkbox>
+        </button>
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showFooter">Show Footer</mat-checkbox>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="div-p5" fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+         fxLayoutWrap fxLayoutAlign="start">
+      <div fxFlex="24%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Classes</mat-label>
+          <mat-select placeholder="Select" name="classid" [(ngModel)]="classid" (selectionChange)="load()" required>
+            <mat-option *ngFor="let c of classes" [value]="c.id">
+              {{c.standard}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Month</mat-label>
+          <mat-select [(ngModel)]="imonth" (selectionChange)="load()" required>
+            <mat-option *ngFor="let m of tmonths" [value]="m.id">{{m.dyr}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Batch</mat-label>
+          <mat-select placeholder="Select" [(ngModel)]="batchid" (selectionChange)="load()" required>
+            <mat-option *ngFor="let b of batches" [value]="b.id">{{b.batch}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </mat-card>
+</div>
+<div class="invoice div-second" *ngIf="students.length > 0">
+  <div class="headings" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="100%">
+      Attendance
+    </div>
+  </div>
+
+  <div class="subheader-row" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="10%" class="title">
+      Class :
+    </div>
+    <div fxFlex="15%">
+      {{getClassName()}}
+    </div>
+    <div fxFlex="10%" class="title">
+      Month :
+    </div>
+    <div fxFlex="15%">
+      {{getMonthName()}}
+    </div>
+    <div fxFlex="10%" class="title">
+      Batch :
+    </div>
+    <div fxFlex="15%">
+      {{getBatchName()}}
+    </div>
+  </div>
+  <table mat-table [dataSource]="students" style="width:100%">
+    <ng-container matColumnDef="name" sticky>
+      <th mat-header-cell *matHeaderCellDef style="width:150px; text-align:left !important;">Student Name / Days </th>
+      <td mat-cell *matCellDef="let element" style="width:150px; text-align:left !important;"> {{element.fname + " " + element.mname + " " + element.lname}} </td>
+    </ng-container>
+    <ng-container matColumnDef="_1">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 1</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._1}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_2">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 2</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._2}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_3">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 3</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._3}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_4">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 4</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._4}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_5">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 5</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._5}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_6">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 6</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._6}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_7">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 7</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._7}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_8">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 8</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._8}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_9">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 9</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._9}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_10">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 10</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._10}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_11">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 11</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._11}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_12">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 12</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._12}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_13">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 13</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._13}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_14">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 14</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._14}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_15">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 15</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._15}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_16">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 16</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._16}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_17">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 17</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._17}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_18">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 18</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._18}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_19">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 19</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._19}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_20">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 20</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._20}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_21">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 21</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._21}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_22">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 22</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._22}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_23">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 23</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._23}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_24">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 24</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._24}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_25">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 25</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._25}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_26">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 26</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._26}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_27">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 27</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._27}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_28">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 28</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._28}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_29">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 29</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._29}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_30">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 30</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._30}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_31">
+      <th mat-header-cell *matHeaderCellDef class="colwidth"> 31</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.tStudentAttendence1[0]._31}}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<div *ngIf="!takeprint && students.length == 0" class="div-second">
+  <mat-card>
+    <div class="mat-card-header">
+      <mat-card-title>Alert</mat-card-title>
+      <span class="spacer"></span>
+    </div>
+    <ul class="default-message">
+      <li>Data not found!</li>
+      <br />
+    </ul>
+  </mat-card>
+</div>

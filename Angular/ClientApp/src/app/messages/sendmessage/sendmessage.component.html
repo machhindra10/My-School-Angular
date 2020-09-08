@@ -1,0 +1,32 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+  <div mat-dialog-title>
+    <mat-card-title>Send Message</mat-card-title>
+  </div>
+  <div mat-dialog-content class="schedule">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Classes</mat-label>
+      <mat-select placeholder="Select" name="classid" [(ngModel)]="messageData.classids" required multiple>
+        <mat-option *ngFor="let c of classes" [value]="c.id">
+          {{c.standard}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>To Whom</mat-label>
+      <mat-select placeholder="Select" name="towhom" [(ngModel)]="messageData.towhom" required multiple>
+        <mat-option value="P">Parents</mat-option>
+        <mat-option value="S">Students</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="text-hint">
+      <mat-label>Message</mat-label>
+      <textarea matInput #message1 [(ngModel)]="messageData.message" maxlength="500" [ngModelOptions]="{standalone: true}"
+        style="min-height: 100px;" required></textarea>
+      <mat-hint align="end">{{message1.value.length}} / 500</mat-hint>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary">Send</button>
+  </div>
+</form>

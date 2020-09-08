@@ -1,0 +1,86 @@
+<div [@simpleFadeAnimation]="'in'">
+  <mat-card>
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+      <div class="example-loading-shade" *ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+      </div>
+      <div class="mat-card-header">
+        <mat-card-title *ngIf="id == 0">Add Leave Type</mat-card-title>
+        <mat-card-title *ngIf="id > 0">Edit Leave Type</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Save"><mat-icon>save</mat-icon></button>
+      </div>
+      <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="10%">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Code</mat-label>
+              <input type="text" matInput name="code" [(ngModel)]="code" maxlength="2"
+                     required>
+            </mat-form-field>
+          </div>
+          <div fxFlex="25%">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Leave Type</mat-label>
+              <input type="text" matInput name="leavetype" [(ngModel)]="leavetype" maxlength="50"
+                     required>
+            </mat-form-field>
+          </div>          
+          <div fxFlex="25%" class="check-box">
+            <mat-checkbox name="iscarryforward" [(ngModel)]="iscarryforward">Is Carry Forward</mat-checkbox>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <div  class="div-second" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+    <mat-card class="mat-card-for-table">
+      <div class="example-loading-shade" *ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+      </div>
+      <div class="mat-card-header mat-card-header-for-table">
+        <mat-card-title>Leave Types</mat-card-title>
+        <span class="spacer"></span>
+      </div>
+      <table mat-table [dataSource]="leavetypes" style="width:100%;">
+        <!-- Column -->
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef style="width:100px;"> Code </th>
+          <td mat-cell *matCellDef="let element"> {{ element.code}} </td>
+        </ng-container>
+        <ng-container matColumnDef="leavetype">
+          <th mat-header-cell *matHeaderCellDef style="width:250px;"> Leave Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.leavetype }} </td>
+        </ng-container>      
+
+        <ng-container matColumnDef="iscarryforward">
+          <th mat-header-cell *matHeaderCellDef style="width:100px;"> Carry Forward </th>
+          <td mat-cell *matCellDef="let element" style="text-align:center;"> {{ element.iscarryforward == true ? 'Yes' : 'No'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dummy">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef style="width:50px; text-align:center;"> Edit</th>
+          <td mat-cell *matCellDef="let element" style="text-align:center;">
+            <button mat-button color="primary" (click)="Update(element)"><mat-icon>edit</mat-icon></button>
+
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button color="primary" (click)="Delete(element.id)"><mat-icon>delete</mat-icon></button>
+
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card>
+  </div>
+
+</div>

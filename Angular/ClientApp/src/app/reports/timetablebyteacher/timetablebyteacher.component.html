@@ -1,0 +1,158 @@
+<div [@simpleFadeAnimation]="'in'" *ngIf="!takeprint" class="fontsize">
+  <mat-card>
+    <div class="example-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+    <div class="mat-card-header">
+      <mat-card-title>Teacher's Time Table Report</mat-card-title>
+      <span class="spacer"></span>
+      <button *ngIf="staffid > 0 && timetabledata.length > 0" mat-button color="primary" (click)="printDocument()" matTooltip="Print"><mat-icon>print</mat-icon></button>
+      <button mat-button color="primary" [matMenuTriggerFor]="menu" matTooltip="Report Settings">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showHeader">Show Header</mat-checkbox>
+        </button>
+        <button mat-menu-item>
+          <mat-checkbox [(ngModel)]="printService.showFooter">Show Footer</mat-checkbox>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="div-p5" fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+         fxLayoutWrap fxLayoutAlign="start">
+      <div fxFlex="24%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Teachers</mat-label>
+          <mat-select placeholder="Select" name="staffid" [(ngModel)]="staffid" (selectionChange)="load()" required>
+            <mat-option *ngFor="let c of teachers" [value]="c.id">
+              {{c.staffname}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24%">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Batch</mat-label>
+          <mat-select placeholder="Select" [(ngModel)]="batchid" (selectionChange)="load()" required>
+            <mat-option *ngFor="let b of batches" [value]="b.id">{{b.batch}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </mat-card>
+</div>
+<div class="invoice div-second" *ngIf="staffid > 0 && timetabledata.length > 0">
+  <div class="headings" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="100%">
+      Teacher's Time Table Report
+    </div>
+  </div>
+  <div class="subheader-row" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="10%" class="title">
+      Teacher :
+    </div>
+    <div fxFlex="40%">
+      {{getTeacherName()}}
+    </div>
+    <span class="spacer"></span>
+    <div fxFlex="10%" class="title">
+      Batch :
+    </div>
+    <div fxFlex="15%">
+      {{getBatchName()}}
+    </div>
+  </div>
+  <table mat-table [dataSource]="timetabledata" style="width:100%;" class="schedule">
+    <ng-container matColumnDef="fromtime">
+      <th mat-header-cell *matHeaderCellDef style="width:180px; text-align:left !important;">Time / Days </th>
+      <td mat-cell *matCellDef="let element" style="width:180px; text-align:left !important;">
+        <div style="display:flex; font-weight:600">
+          {{toTime(element.fromtime) | date : 'hh:mm a'}} - {{toTime(element.totime) | date : 'hh:mm a'}}
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="_sunday">
+      <th mat-header-cell *matHeaderCellDef> Sunday</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.sunday != null">
+          <span class="class-name">{{element.sunday.class.standard}}</span><br />
+          <span class="subject-name">({{element.sunday.subject.subject }})</span>
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_monday">
+      <th mat-header-cell *matHeaderCellDef> Monday</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.monday != null">
+          <span class="class-name">{{element.monday.class.standard}}</span><br />
+          <span class="subject-name">({{element.monday.subject.subject }})</span>
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_tuesday">
+      <th mat-header-cell *matHeaderCellDef> Tuesday</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.tuesday != null">
+          <span class="class-name">{{element.tuesday.class.standard}}</span><br />
+          <span class="subject-name">({{element.tuesday.subject.subject }})</span>
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_wednesday">
+      <th mat-header-cell *matHeaderCellDef> Wednesday</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.wednesday != null">
+          <span class="class-name">{{element.wednesday.class.standard}}</span><br />
+          <span class="subject-name">({{element.wednesday.subject.subject }})</span>
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_thursday">
+      <th mat-header-cell *matHeaderCellDef > Thursday</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.thursday != null">
+          <span class="class-name">{{element.thursday.class.standard}}</span><br />
+          <span class="subject-name">({{element.thursday.subject.subject }})</span>
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_friday">
+      <th mat-header-cell *matHeaderCellDef> Friday</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.friday != null">
+          <span class="class-name">{{element.friday.class.standard}}</span><br />
+          <span class="subject-name">({{element.friday.subject.subject }})</span>
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="_saturday">
+      <th mat-header-cell *matHeaderCellDef> Saturday</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.saturday != null">
+          <span class="class-name">{{element.saturday.class.standard}}</span><br />
+          <span class="subject-name">({{element.saturday.subject.subject }})</span>
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; "></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
+<div *ngIf="!takeprint && timetabledata.length == 0" class="div-second">
+  <mat-card>
+    <div class="mat-card-header">
+      <mat-card-title>Alert</mat-card-title>
+      <span class="spacer"></span>
+    </div>
+    <ul class="default-message">
+      <li>Data not found!</li>
+      <br />
+    </ul>
+  </mat-card>
+</div>

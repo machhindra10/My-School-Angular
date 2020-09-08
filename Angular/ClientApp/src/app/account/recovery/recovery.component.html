@@ -1,0 +1,54 @@
+<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+  
+  <div fxFlex="30%">
+
+  </div>
+  <div fxFlex="40%" class="second-div">
+
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" [style.fontSize.px]="13">
+      <mat-card style=" margin:15px; padding:40px; padding-top: 20px; padding-bottom: 20px" class="mat-elevation-z1">
+        <div class="example-loading-shade" *ngIf="isLoading">
+          <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header">
+          <mat-card-title>Password recovery</mat-card-title>
+        </div>
+        <div *ngIf="!invalidrequest" class="div-main">
+          <div *ngIf="!success">
+            <br />
+            <div style="margin-bottom:20px;">Enter new password</div>
+            <div style="margin-bottom:10px;" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap
+                 fxLayoutGap="15px" fxLayoutAlign="start">
+              <div fxFlex="100%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>New Password</mat-label>
+                  <input type="password" matInput name="newpass" [(ngModel)]="newpass" maxlength="15" required>
+                </mat-form-field>
+              </div>
+              <div fxFlex="100%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>Confirm Password</mat-label>
+                  <input type="password" matInput name="rnewpass" [(ngModel)]="confirmpass" maxlength="15" required>
+                </mat-form-field>
+              </div>
+              <div *ngIf="passnotmatch" class="alert alert-danger">Password doesn't match.</div>
+            </div>
+            <mat-card-actions align="end">
+              <button mat-raised-button color="primary">Next</button>&nbsp;
+            </mat-card-actions>
+          </div>
+        </div>
+        <div *ngIf="success" class="div-main-green">
+          Password changed successfully. Please go to <a routerLink="/login">login</a> page!
+        </div>
+        <div *ngIf="invalidrequest" class="div-main-green">
+          Invalid request. Please contact administrator!
+        </div>
+      </mat-card>
+    </form>
+
+  </div>
+  <div fxFlex="30%">
+
+  </div>
+</div>

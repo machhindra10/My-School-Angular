@@ -1,0 +1,123 @@
+
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+
+
+/* css for spinner */
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  z-index: 105;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* css for spinner end */
+
+
+
+/deep/.no-arrow div.mat-select-arrow {
+  visibility: hidden !important;
+}
+
+table .mat-select {
+  padding-left: 10px;
+  
+}
+
+.example-container {
+  /*height: 363px;*/
+  height: 344px;
+  width: inherit;
+  overflow: auto;
+}
+
+table {
+  width: 1500px;
+}
+
+td.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+/*.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}*/
+
+th, td {
+  text-align: center !important;
+  width: 15px;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 5px;
+  height:7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .10);
+}
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+th.mat-header-cell {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: rgba(0,0,0,.12);
+}
+.sp-disabled {
+  color: lightgray;
+}
+
+.icon-status {
+  font-family: 'Lato', sans-serif !important;
+  font-size: 16px;
+  line-height: 17px;
+}
+
+.red {
+  color: red;
+}
+
+.black {
+  color: black;
+}
+
+.blue {
+  color: blue;
+}
+
+.icon-status1 {
+  font-family: 'Lato', sans-serif !important;
+  font-size: 16px;
+  line-height: 30px;
+  border-radius: 15px;
+  width: 30px;
+  padding: 0px;
+}
+
+.legends span {
+  padding-right: 10px;
+}
+.current {
+  background-color: rgba(0,0,0,0.05);
+}

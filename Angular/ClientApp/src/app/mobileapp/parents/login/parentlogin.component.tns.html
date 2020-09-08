@@ -1,0 +1,28 @@
+<ActionBar title="Register"></ActionBar>
+<FlexboxLayout class="page">
+  <StackLayout class="form">
+    <PreviousNextView>
+      <GridLayout rows="auto, auto, auto">
+        <StackLayout row="0" class="input-field">
+          <TextField class="input" hint="code" [isEnabled]="!processing" keyboardType="email" autocorrect="false"
+            autocapitalizationType="none" [(ngModel)]="user.code"></TextField>
+          <StackLayout class="hr-light"></StackLayout>
+        </StackLayout>
+        <StackLayout row="1" class="input-field">
+          <TextField class="input" hint="mobile" [isEnabled]="!processing" keyboardType="email" autocorrect="false"
+            autocapitalizationType="none" maxLength="10" [(ngModel)]="guardian.mobile"></TextField>
+          <StackLayout class="hr-light"></StackLayout>
+        </StackLayout>
+        <StackLayout row="2" class="input-field">
+          <TextField class="input" hint="password" maxLength="10" secure="true" [isEnabled]="!processing"
+            keyboardType="email" autocorrect="false" autocapitalizationType="none" [(ngModel)]="guardian.password">
+          </TextField>
+          <StackLayout class="hr-light"></StackLayout>
+        </StackLayout>
+        <ActivityIndicator rowSpan="1" [busy]="processing"></ActivityIndicator>
+      </GridLayout>
+    </PreviousNextView>
+    <Button [text]="isLoggingIn ? 'Submit' : 'Sign Up'" [isEnabled]="!processing" (tap)="submit()"
+      class="btn btn-primary m-t-20"></Button>
+  </StackLayout>
+</FlexboxLayout>

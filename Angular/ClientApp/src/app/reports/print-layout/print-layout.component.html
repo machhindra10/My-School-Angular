@@ -1,0 +1,36 @@
+  <table [class]="layout">
+    <thead>
+      <tr>
+        <td>
+          <div class="header-space" *ngIf="printService.showHeader"></div>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="content">
+            <router-outlet></router-outlet>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>
+          <div class="footer-space"  *ngIf="printService.showFooter"></div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <div class="header"  *ngIf="printService.showHeader"><app-print-header></app-print-header></div>
+  <div class="footer"  *ngIf="printService.showFooter">
+    <div class="full" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+      <div fxFlex="50%" fxLayoutAlign="start">
+        {{getdate | date:'dd/MM/yyyy hh:mm:ss' }}
+      </div>
+      <div fxFlex="50%" fxLayoutAlign="end">
+        {{printService.title}}
+      </div>
+    </div>    
+  </div>

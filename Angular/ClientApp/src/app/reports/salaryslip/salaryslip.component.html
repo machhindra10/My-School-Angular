@@ -1,0 +1,142 @@
+<div class="invoice div-second" *ngIf="salaryslipid > 0">
+  <div class="headings" fxLayout="row" fxLayoutWrap fxLayoutGap="0px" fxLayoutAlign="start">
+    <div fxFlex="100%">
+      Salary Slip
+    </div>
+  </div>
+  <table class="full">
+    <tr>
+      <td style="width:105px;">Slip No. :</td>
+      <td>{{salary.id}}</td>
+      <td style="width:auto"></td>
+      <td style="width:120px;">Date :</td>
+      <td style="width:82px;">{{salary.datepaid | date:'dd/MM/yyyy'}}</td>
+    </tr>
+    <tr>
+      <td>Staff Name :</td>
+      <td>
+        {{ staff1.staffname }}
+      </td>
+      <td></td>
+      <td>Remark :</td>
+      <td>{{(salary.ispaid) ? 'Paid' : 'Not Paid'}}</td>
+    </tr>
+    <tr>
+      <td>Joining Date :</td>
+      <td>{{ staff1.doj | date:'dd/MM/yyyy'}}</td>
+      <td></td>
+      <td>Period :</td>
+      <td>{{ getMonthName(salary.month)}} - {{salary.year}}</td>
+    </tr>
+    <tr>
+      <td>Address. :</td>
+      <td>{{ staff1.address }}</td>
+      <td></td>
+      <td>Total Days :</td>
+      <td>{{ totalDays }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Days Payable :</td>
+      <td>{{ daysPayable }}</td>
+    </tr>
+  </table>
+
+  <div class="div-second" fxLayout="row" fxLayout.sm="row" fxLayout.xs="row" fxLayoutWrap fxLayoutGap="15px"
+       fxLayoutAlign="start">
+
+    <div fxFlex="50%">
+      <!--<mat-card class="mat-card-for-table">-->
+      <div class="mat-card-header mat-card-header-for-table">
+        <mat-card-title>Earnings</mat-card-title>
+        <span class="spacer"></span>
+      </div>
+      <table mat-table [dataSource]="salaryDetailsE" style="width:100%;">
+        <ng-container matColumnDef="head">
+          <th mat-header-cell *matHeaderCellDef> Perticulars </th>
+          <td mat-cell *matCellDef="let element"> {{element.head }} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.type }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef class="col-right-100"> Amount ({{currencycode | currencySymbol}}) </th>
+          <td mat-cell *matCellDef="let element" class="col-right-100">
+            {{currencycode | currencySymbol}}
+            {{element.amount| currency : ' '}}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" color="primary"
+            [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
+      </table>
+      <!--</mat-card>-->
+
+    </div>
+
+    <div fxFlex="50%">
+      <!--<mat-card class="mat-card-for-table">-->
+      <div class="mat-card-header mat-card-header-for-table">
+        <mat-card-title>Deductions</mat-card-title>
+        <span class="spacer"></span>
+      </div>
+      <table mat-table [dataSource]="salaryDetailsD" style="width:100%;">
+        <ng-container matColumnDef="head">
+          <th mat-header-cell *matHeaderCellDef> Perticulars </th>
+          <td mat-cell *matCellDef="let element"> {{element.head }} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.type }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef class="col-right-100"> Amount ({{currencycode | currencySymbol}}) </th>
+          <td mat-cell *matCellDef="let element" class="col-right-100">
+            {{currencycode | currencySymbol}}
+            {{element.amount | currency : ' '}}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" color="primary"
+            [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
+      </table>
+      <!--</mat-card>-->
+    </div>
+
+  </div>
+  <div class="div-second">
+    <table class="full">
+      <tr>
+        <td style="width:160px;">Total Earnings :</td>
+        <td style="text-align:right; width:120px;">
+          {{currencycode | currencySymbol}}
+          {{salary.earnings | currency : ' '}}
+        </td>
+        <td style="width:auto"></td>
+        <td style="width:60px;"></td>
+        <td style="width:82px;"></td>
+      </tr>
+      <tr>
+        <td>Total Deductions :</td>
+        <td style="text-align:right">
+          {{currencycode | currencySymbol}} {{ salary.deductions | currency : ' '}}
+        </td>
+        <td style="width:auto"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Net Pay :</td>
+        <td style="text-align:right">{{currencycode | currencySymbol}}{{ salary.netpay | currency : ' '}}</td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>

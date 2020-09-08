@@ -1,0 +1,113 @@
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.invoice {
+  page-break-after: always;  
+}
+
+  .invoice:last-child {
+    page-break-after: avoid;
+  }
+.fontsize{
+  font-size:14px;
+  
+}
+
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+
+/* Small table */
+/deep/ tr.mat-footer-row, tr.mat-row {
+  height: 35px !important;
+}
+
+
+
+/deep/ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type {
+  padding-right: 15px !important;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 20px;
+}
+.colwidth{
+  width:20px;
+}
+.title{
+  font-weight:600;
+}
+.subheader-row {
+  padding: 5px;
+  padding-left:10px;
+  background: #fff;
+  padding-bottom: 0px;
+  font-size:14px;
+}
+.subheader-row-photo {
+  padding-right: 10px;  
+  padding-top: 0px;
+  background: #fff;    
+}
+.headings {
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 20px;
+  padding-bottom: 0;
+  background: #fff;
+  text-transform: uppercase;
+}
+.mat-card2 {
+  border-radius: 4px !important;
+  padding: 3px !important;
+  width: 80px !important;
+  height: 80px !important;
+}
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-color: rgba(0,0,0,.12);
+}
+
+.mat-footer-cell {
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-color: rgba(0,0,0,.12);
+}
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 0;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-color: rgba(0,0,0,.12);
+}
+
+  td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+    padding-left: 20px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-color: rgba(0,0,0,.12);
+  }
+td.mat-cell {
+  padding: 0;
+   border-bottom-width: 0px; 
+   border-bottom-style: none; 
+}
+
+
+

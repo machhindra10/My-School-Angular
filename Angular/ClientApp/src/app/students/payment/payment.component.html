@@ -1,0 +1,136 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade"
+       *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+
+  <mat-card>
+    <div class="mat-card-header">
+      <!--<button type="button" mat-button color="primary" matTooltip="Back" (click)="Back()"><mat-icon>arrow_back</mat-icon></button>-->
+      <mat-card-title *ngIf="studentid == 0">Search</mat-card-title>
+      <mat-card-title *ngIf="studentid > 0">Student Demographic</mat-card-title>
+      <span class="spacer"></span>
+      <button type="button" mat-button color="primary" matTooltip="Select another student" *ngIf="studentid > 0" (click)="selectAnotherStudent()"><mat-icon>search</mat-icon></button>
+
+    </div>
+    <mat-card-content>
+      <div class="div-p5">
+        <div *ngIf="studentid == 0" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="33%">
+            <app-ucsearch (afterSelect)="onAfterSelect($event)"></app-ucsearch>
+          </div>
+        </div>
+        <div *ngIf="studentid > 0">
+          <app-ucstudent [studentid]="studentid"></app-ucstudent>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+  <div *ngIf="studentid > 0 && !isLoading3"  class="div-second">
+    <div *ngIf="isadmitted">
+      <div fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+           fxLayoutWrap fxLayoutAlign="start">
+        <div fxFlex="50%">
+          <mat-card>
+            <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+
+              <div class="mat-card-header">
+                <mat-card-title>Student Payment</mat-card-title>
+                <span class="spacer"></span>
+                <button mat-button color="primary" matTooltip="Save" *ngIf="isadmitted && studentid > 0"><mat-icon>save</mat-icon></button>
+
+              </div>
+              <div class="div-p5">
+                <div fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+                     fxLayoutWrap fxLayoutAlign="start">
+                  <div fxFlex="100%">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Desciption</mat-label>
+                      <input type="text" matInput [(ngModel)]="tstudentpayment.description" name="description" maxlength="100" required />
+                    </mat-form-field>
+                  </div>
+
+                </div>
+                <div fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+                     fxLayoutWrap fxLayoutAlign="start">
+
+                  <div fxFlex="50%">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Mode</mat-label>
+                      <mat-select name="mode" [(ngModel)]="tstudentpayment.mode" required>
+                        <mat-option *ngFor="let m of paymentmodes" [value]="m.modename">
+                          {{m.modename}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div><div fxFlex="50%">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Cheque / Transaction No.</mat-label>
+                      <input type="text" matInput [(ngModel)]="tstudentpayment.chtrno" name="chtrno" maxlength="10" />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+                     fxLayoutWrap fxLayoutAlign="start">
+
+                  <div fxFlex="50%">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Amount</mat-label>
+                      <input type="text" matInput [(ngModel)]="tstudentpayment.amount" name="amount" maxlength="13" pattern="^\d*(\.\d{0,2})?$" required />
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex="50%">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Date</mat-label>
+                      <input matInput readonly [matDatepicker]="picker" name="dob" [(ngModel)]="tstudentpayment.datecreated" datetime="dd/MM/yyyy" required>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-card>
+        </div>
+        <div fxFlex="50%">
+          <app-paysummary [studentid]="studentid" [refresh]="reloadchild" class="div-app-classteacher"></app-paysummary>
+
+        </div>
+      </div>
+      <div  class="div-second">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Fees and Payment Details
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="row" [fxLayout.sm]="printService.isPrinting ? 'row' : 'column'" [fxLayout.xs]="printService.isPrinting ? 'row' : 'column'" fxLayoutGap="15px"
+                 fxLayoutWrap fxLayoutAlign="start">
+
+              <div fxFlex="50%"><app-studentfees (afterUpdate)="onAfterFeesUpdate($event)" [studentid]="studentid" class="div-app-classteacher"></app-studentfees></div>
+              <div fxFlex="50%"><app-studentpayments [studentid]="studentid" [refresh]="reloadchild" class="div-app-classteacher"></app-studentpayments></div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <div *ngIf="!isadmitted">
+      <mat-card>
+        <div class="mat-card-header">
+          <mat-card-title>Admission status</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px" fxLayoutAlign="start">
+          <div fxFlex="100%">
+            <mat-card-title style="padding:10px;">Student Not admitted yet!</mat-card-title>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+</div>

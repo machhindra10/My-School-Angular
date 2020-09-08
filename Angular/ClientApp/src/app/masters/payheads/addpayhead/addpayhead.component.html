@@ -1,0 +1,44 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+    <mat-card>
+      <div class="mat-card-header">
+        <button type="button" mat-button color="primary" matTooltip="Back" (click)="Back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-card-title>Payroll Head</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-button color="primary" matTooltip="Save">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+      <div class="div-p5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+        fxLayoutAlign="start">
+        <div fxFlex="25%">
+          <mat-form-field appearance="outline">
+            <mat-label>Head</mat-label>
+            <input type="text" matInput name="head" [(ngModel)]="payrollhead.head" maxlength="100" required>
+          </mat-form-field>
+        </div>
+        <div fxFlex="25%" *ngIf="false">
+          <mat-form-field appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input type="text" matInput name="amount" value="0" [(ngModel)]="payrollhead.amount" maxlength="10"
+              required>
+          </mat-form-field>
+        </div>
+        <div fxFlex="25%">
+          <mat-form-field appearance="outline">
+            <mat-label>Type</mat-label>
+            <mat-select name="type" [(ngModel)]="payrollhead.type" required>
+              <mat-option value="Earnings">Earnings</mat-option>
+              <mat-option value="Deductions">Deductions</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>

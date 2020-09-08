@@ -1,0 +1,85 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+  <div class="example-loading-shade"
+       *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  </div>
+  <mat-card class="mat-card-for-table">
+    <div class="mat-card-header mat-card-header-for-table">
+      <mat-card-title>Leave Applications</mat-card-title>
+      <span class="spacer"></span>
+    </div>
+    <table mat-table [dataSource]="applications" style="width:100%;">
+      <!-- Column -->
+      <ng-container matColumnDef="staffname">
+        <th mat-header-cell *matHeaderCellDef> Staff Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.staff.staffname }} </td>
+      </ng-container>
+      <ng-container matColumnDef="leavetype">
+        <th mat-header-cell *matHeaderCellDef> Leave Type </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.leavetype.code }} - {{element.leavetype.leavetype }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.description.length <= 10">{{element.description}}</span>
+          <span *ngIf="element.description.length > 10">
+            {{element.description.substring(0, 10)}}...
+            <span *ngIf="element.description.length > 10" [matMenuTriggerFor]="menu1" class="span-more">more</span>
+          </span>
+          <mat-menu #menu1="matMenu">
+            <div class="reason">{{element.description}}</div>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="datefrom">
+        <th mat-header-cell *matHeaderCellDef style="width:100px;"> From </th>
+        <td mat-cell *matCellDef="let element"> {{element.datefrom | date : 'dd/MM/yyyy'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dateto">
+        <th mat-header-cell *matHeaderCellDef style="width:100px;"> To </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateto | date : 'dd/MM/yyyy' }} </td>
+      </ng-container>
+      <ng-container matColumnDef="approve">
+        <th mat-header-cell *matHeaderCellDef style="width:110px;"> Status </th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.status == 'Approved'" class="span-green">{{element.status }}</span>
+          <span *ngIf="element.status == 'Rejected'" class="span-red">{{element.status }}</span>
+          <div *ngIf="element.status == 'Pending'" class="span-black">
+            {{element.status }}
+            <button mat-button color="primary" [matMenuTriggerFor]="menu">
+              <mat-icon>reply</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="Reject(element)">
+                <mat-icon color="warn">cancel</mat-icon>
+                <span>Reject</span>
+              </button>
+              <button mat-menu-item (click)="Approve(element)">
+                <mat-icon color="primary">check_circle</mat-icon>
+                <span>Approve</span>
+              </button>
+            </mat-menu>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="info">
+        <th mat-header-cell *matHeaderCellDef style="width:60px;"> Info </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button  (click)="info(element)" matTooltip="Leaves info">
+            <mat-icon color="primary">info</mat-icon>            
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="primary" (click)="Delete(element.id)"><mat-icon>delete</mat-icon></button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

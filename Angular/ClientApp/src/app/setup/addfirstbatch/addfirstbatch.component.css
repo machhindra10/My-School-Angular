@@ -1,0 +1,43 @@
+.spinner {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/deep/.mat-progress-spinner svg {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  z-index: 105;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px;
+  background-color: rgba(0,0,0,0.12);
+}
+
+
+/deep/.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.card {
+  /*margin: 10px;
+  padding: 20px !important;
+  margin-top:20px;*/
+  box-shadow: none;
+}
+
+.div-p5 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0px;
+}
+

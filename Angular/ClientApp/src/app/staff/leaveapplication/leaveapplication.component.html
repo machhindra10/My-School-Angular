@@ -1,0 +1,172 @@
+<div [@simpleFadeAnimation]="'in'" class="inner">
+
+
+  <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+       fxLayoutAlign="start">
+    <div fxFlex="60%">
+
+      <mat-card>
+        <form class="form-signin" #loginForm="ngForm" (ngSubmit)="Save(loginForm)" [style.fontSize.px]="14">
+          <div class="example-loading-shade" *ngIf="isLoading">
+            <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+          </div>
+          <div class="mat-card-header">
+            <mat-card-title>Leave Application</mat-card-title>
+            <span class="spacer"></span>
+            <button mat-button color="primary" matTooltip="Save">
+              <mat-icon>save</mat-icon>
+            </button>
+          </div>
+          <div class="div-p5" fxLayout="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px"
+               fxLayoutAlign="start">
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+                 fxLayoutAlign="start">
+              <div fxFlex="48%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>Leave Type</mat-label>
+                  <mat-select name="type" [(ngModel)]="data.leavetypeid" required>
+                    <mat-option *ngFor="let lt of leavetypes" [value]="lt.id">{{lt.leavetype}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+                 fxLayoutAlign="start">
+              <div fxFlex="50%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>When</mat-label>
+                  <input matInput readonly (dateChange)="changeDate($event)" [matDatepicker]="picker" name="datefrom"
+                         [(ngModel)]="data.datefrom" datetime="dd/MM/yyyy" required [min]="minFrom" [max]="maxBoth">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div fxFlex="50%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>Up to</mat-label>
+                  <input matInput readonly [matDatepicker]="picker1" name="dateto" [(ngModel)]="data.dateto"
+                         datetime="dd/MM/yyyy" required [min]="minTo" [max]="maxBoth">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div fxFlex="100%" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15px"
+                 fxLayoutAlign="start">
+
+              <div fxFlex="100%">
+                <mat-form-field appearance="outline" floatLabel="always">
+                  <mat-label>Description</mat-label>
+                  <input type="text" matInput name="description" [(ngModel)]="data.description" maxlength="500"
+                         required>
+                </mat-form-field>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </mat-card>
+      <div class="div-second">
+        <mat-card class="mat-card-for-table">
+          <div class="example-loading-shade" *ngIf="isLoading2">
+            <mat-spinner *ngIf="isLoading2" class="spinner"></mat-spinner>
+          </div>
+          <div class="mat-card-header mat-card-header-for-table">
+            <mat-card-title>Leave Applications</mat-card-title>
+            <span class="spacer"></span>
+          </div>
+          <table mat-table [dataSource]="applications" style="width:100%;">
+            <!-- Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef> Description </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.description.substring(0, 10) }}...
+                <span [matMenuTriggerFor]="menu1" class="span-more">more</span>
+                <mat-menu #menu1="matMenu">
+                  <div class="reason">{{element.description}}</div>
+                </mat-menu>
+              </td>
+            </ng-container>
+            <!--<ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef> Description </th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="more">
+                  {{element.description.substring(0, 10) }}...
+                  <span (click)="more=false" class="span-more">more</span>
+                </span>
+                <span *ngIf="!more">
+                  {{element.description }}
+                  <span (click)="more=true" class="span-more">hide</span>
+                </span>
+              </td>
+            </ng-container>-->
+            <ng-container matColumnDef="leavetype">
+              <th mat-header-cell *matHeaderCellDef> Leave Type </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.leavetype.leavetype }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="datefrom">
+              <th mat-header-cell *matHeaderCellDef style="width:100px;"> From </th>
+              <td mat-cell *matCellDef="let element"> {{element.datefrom | date : 'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dateto">
+              <th mat-header-cell *matHeaderCellDef style="width:100px;"> To </th>
+              <td mat-cell *matCellDef="let element"> {{element.dateto | date : 'dd/MM/yyyy' }} </td>
+            </ng-container>
+            <ng-container matColumnDef="approve">
+              <th mat-header-cell *matHeaderCellDef style="width:100px;"> Status </th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.status == 'Approved'" class="span-green">{{element.status }}</span>
+                <div *ngIf="element.status == 'Rejected'" class="span-red">
+                  {{element.status }}
+                  <button *ngIf="element.reason != null" mat-button color="primary" [matMenuTriggerFor]="menu">
+                    <mat-icon>info</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <div class="reason div-reason">{{element.reason}}</div>                    
+                  </mat-menu>
+                </div>
+
+                <span *ngIf="element.status == 'Pending'" class="span-black">{{element.status }}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef style="width:50px;"> Delete</th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button color="primary" [disabled]="element.status != 'Pending'" (click)="Delete(element.id)"><mat-icon>delete</mat-icon></button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+          </table>
+        </mat-card>
+      </div>
+    </div>
+    <div fxFlex="40%">
+      <mat-card class="mat-card-for-table">
+        <div class="example-loading-shade" *ngIf="isLoading1">
+          <mat-spinner *ngIf="isLoading1" class="spinner"></mat-spinner>
+        </div>
+        <div class="mat-card-header mat-card-header-for-table">
+          <mat-card-title>Remaining Leaves</mat-card-title>
+          <span class="spacer"></span>
+        </div>
+        <table mat-table [dataSource]="leavesreamining" style="width:100%;">
+          <!-- Column -->
+          <ng-container matColumnDef="leavetype">
+            <th mat-header-cell *matHeaderCellDef> Leave Type </th>
+            <td mat-cell *matCellDef="let element">{{ element.code }} - {{ element.leavetype }} </td>
+          </ng-container>
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef> Leaves </th>
+            <td mat-cell *matCellDef="let element"> {{element.count }} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card>
+    </div>
+  </div>
+</div>
